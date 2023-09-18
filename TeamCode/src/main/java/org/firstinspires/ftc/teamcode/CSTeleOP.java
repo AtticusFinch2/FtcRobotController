@@ -84,6 +84,11 @@ public class CSTeleOP extends LinearOpMode {
         runtime.reset();
         double x;
         double y;
+        double flCurrentPower = 0;
+        double frCurrentPower = 0;
+        double blCurrentPower = 0;
+        double brCurrentPower = 0;
+        int stillModifier = 4;
         double flPWR, frPWR, blPWR, brPWR;
         double speed =0.5;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
@@ -120,13 +125,13 @@ public class CSTeleOP extends LinearOpMode {
 
             //creep (i'm a weirdoooooo what the hell am i doin' here)
             if (gamepad1.dpad_up) {
-                y=0.5;
+                y=0.3;
             } else if (gamepad1.dpad_down) {
-                y=-0.5;
+                y=-0.3;
             } else if (gamepad1.dpad_left) {
-                x=-0.5;
+                x=-0.3;
             } else if (gamepad1.dpad_right) {
-                x=0.5;
+                x=0.3;
             }
 
 
@@ -170,10 +175,17 @@ public class CSTeleOP extends LinearOpMode {
 
             rx = gamepad1.right_stick_x/4;//this is very touchy so it is divided by 4
             if (Math.abs(rx) > 0.03) { // we do a little spinning
-                flPWR+=rx;
-                blPWR+=rx;
-                frPWR-=rx;
-                brPWR-=rx;
+                if (Math.abs(x) > 0.03 || Math.abs(y) > 0.03) {
+                    flPWR += rx;
+                    blPWR += rx;
+                    frPWR -= rx;
+                    brPWR -= rx;
+                } else {
+                    flPWR += rx * stillModifier;
+                    blPWR += rx * stillModifier;
+                    frPWR -= rx * stillModifier;
+                    brPWR -= rx * stillModifier;
+                }
             }
 
             flPWR = Range.clip(flPWR, -1.0, 1.0) ;
@@ -181,10 +193,21 @@ public class CSTeleOP extends LinearOpMode {
             blPWR = Range.clip(blPWR, -1.0, 1.0) ;
             brPWR = Range.clip(brPWR, -1.0, 1.0) ;
             // Send calculated power to wheels
-            FL.setPower(flPWR);
-            FR.setPower(frPWR);
-            BL.setPower(blPWR);
-            BR.setPower(brPWR);
+
+
+            flCurrentPower -= Range.clip(flCurrentPower - flPWR,-0.02,0.02);
+            frCurrentPower -= Range.clip(frCurrentPower - frPWR,-0.02,0.02);
+            blCurrentPower -= Range.clip(blCurrentPower - blPWR,-0.02,0.02);
+            brCurrentPower -= Range.clip(brCurrentPower - brPWR,-0.02,0.02);
+            flCurrentPower = Range.clip(flCurrentPower,-1,1);
+            frCurrentPower = Range.clip(frCurrentPower,-1,1);
+            blCurrentPower = Range.clip(blCurrentPower,-1,1);
+            brCurrentPower = Range.clip(brCurrentPower,-1,1);
+
+            FL.setPower(flCurrentPower);
+            FR.setPower(frCurrentPower);
+            BL.setPower(blCurrentPower);
+            BR.setPower(brCurrentPower);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
