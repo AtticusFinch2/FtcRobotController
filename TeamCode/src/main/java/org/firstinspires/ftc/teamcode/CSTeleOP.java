@@ -89,7 +89,7 @@ public class CSTeleOP extends LinearOpMode {
         double blCurrentPower = 0;
         double brCurrentPower = 0;
         double tractionModifier = 0.02;
-        int stillModifier = 2;
+        float stillModifier = 9f;
         double flPWR, frPWR, blPWR, brPWR;
         double speed = 1;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
@@ -174,7 +174,7 @@ public class CSTeleOP extends LinearOpMode {
             }
 
 
-            rx = gamepad1.right_stick_x/4;//this is very touchy so it is divided by 4
+            rx = gamepad1.right_stick_x;//this is very touchy so it is divided by 4
             if (Math.abs(rx) > 0.03) { // we do a little spinning
                 if (Math.abs(x) > 0.03 || Math.abs(y) > 0.03) {
                     flPWR += rx;
