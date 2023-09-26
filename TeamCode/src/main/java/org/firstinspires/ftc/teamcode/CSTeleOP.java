@@ -49,6 +49,8 @@ public class CSTeleOP extends LinearOpMode {
     private DcMotor FR = null;
     private DcMotor BL = null;
     private DcMotor BR = null;
+    private DcMotor LS = null;
+    private DcMotor RS = null;
 
     @Override
     public void runOpMode() {
@@ -62,21 +64,29 @@ public class CSTeleOP extends LinearOpMode {
         BR = hardwareMap.get(DcMotor.class, "br");
         FL  = hardwareMap.get(DcMotor.class, "fl");
         FR = hardwareMap.get(DcMotor.class, "fr");
+        LS  = hardwareMap.get(DcMotor.class, "portMotor");
+        RS = hardwareMap.get(DcMotor.class, "starboardMotor");
 
         BL.setDirection(DcMotor.Direction.FORWARD);
         FL.setDirection(DcMotor.Direction.FORWARD);
         BR.setDirection(DcMotor.Direction.REVERSE);
         FR.setDirection(DcMotor.Direction.REVERSE);
+        LS.setDirection(DcMotor.Direction.REVERSE);
+        RS.setDirection(DcMotor.Direction.FORWARD);
 
         FL.setPower(0);
         FR.setPower(0);
         BL.setPower(0);
         BR.setPower(0);
+        LS.setPower(0);
+        RS.setPower(0);
 
         FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        LS.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        RS.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -84,13 +94,17 @@ public class CSTeleOP extends LinearOpMode {
         runtime.reset();
         double x;
         double y;
+        double vert;
         double flCurrentPower = 0;
         double frCurrentPower = 0;
         double blCurrentPower = 0;
         double brCurrentPower = 0;
+        double lsCurrentPower = 0;
+        double rsCurrentPower = 0;
         double tractionModifier = 0.02;
+        double slideTractionModifier = 0.02;
         float stillModifier = 9f;
-        double flPWR, frPWR, blPWR, brPWR;
+        double flPWR, frPWR, blPWR, brPWR, lsPWR, rsPWR;
         double speed = 1;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
         float rx;
@@ -104,13 +118,17 @@ public class CSTeleOP extends LinearOpMode {
             frPWR=0;
             blPWR=0;
             brPWR = 0;
+            lsPWR = 0;
+            rsPWR = 0;
 
             //This uses basic math to combine motions and is easier to drive straight.
             y = -gamepad1.left_stick_y;
             x = gamepad1.left_stick_x;
+            vert = gamepad1.right_trigger - gamepad1.left_trigger;
             telemetry.addData("dir", "xin (%.2f), yin (%.2f)", x, y);
             x = Range.clip(x, -1.0, 1.0) ; // gives values between -1 and 1, useful later
             y = Range.clip(y, -1.0, 1.0) ;
+            vert = Range.clip(vert,-1.0,1.0);
 
 
             //convert circular plane to rectangular plane,
@@ -189,10 +207,16 @@ public class CSTeleOP extends LinearOpMode {
                 }
             }
 
+            lsPWR = vert;
+            rsPWR = vert;
+
             flPWR = Range.clip(flPWR, -1.0, 1.0) ;
             frPWR = Range.clip(frPWR, -1.0, 1.0) ;
             blPWR = Range.clip(blPWR, -1.0, 1.0) ;
             brPWR = Range.clip(brPWR, -1.0, 1.0) ;
+
+            lsPWR = Range.clip(lsPWR, -1.0, 1.0) ;
+            rsPWR = Range.clip(rsPWR, -1.0, 1.0) ;
             // Send calculated power to wheels
 
             if (gamepad1.a) {
@@ -210,10 +234,19 @@ public class CSTeleOP extends LinearOpMode {
             blCurrentPower = Range.clip(blCurrentPower,-1,1);
             brCurrentPower = Range.clip(brCurrentPower,-1,1);
 
+
+            lsCurrentPower -= Range.clip(lsCurrentPower - lsPWR,-slideTractionModifier,slideTractionModifier);
+            rsCurrentPower -= Range.clip(rsCurrentPower - rsPWR,-slideTractionModifier,slideTractionModifier);
+            lsCurrentPower = Range.clip(lsCurrentPower,-1,1);
+            rsCurrentPower = Range.clip(rsCurrentPower,-1,1);
+
             FL.setPower(flCurrentPower);
             FR.setPower(frCurrentPower);
             BL.setPower(blCurrentPower);
             BR.setPower(brCurrentPower * 0.80);
+
+            LS.setPower(lsCurrentPower);
+            RS.setPower(rsCurrentPower);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -221,6 +254,8 @@ public class CSTeleOP extends LinearOpMode {
             telemetry.addData("fr", Double.toString(frPWR));
             telemetry.addData("bl", Double.toString(blPWR));
             telemetry.addData("br", Double.toString(brPWR));
+            telemetry.addData("ls", Double.toString(lsPWR));
+            telemetry.addData("rs", Double.toString(rsPWR));
 
             telemetry.update();
         }
