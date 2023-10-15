@@ -129,7 +129,7 @@ public class ClawMachine extends LinearOpMode{
     }
     public void clawUp(){
         robot.Vertical.setPower(1);
-        sleep(2000);
+        sleep(1400);
         robot.Vertical.setPower(0);
     }
 }
