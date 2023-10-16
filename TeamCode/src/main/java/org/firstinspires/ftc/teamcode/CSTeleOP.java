@@ -32,8 +32,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -51,6 +53,7 @@ public class CSTeleOP extends LinearOpMode {
     private DcMotor BR = null;
     private DcMotor LS = null;
     private DcMotor RS = null;
+    private CRServo Sweep = null;
 
     @Override
     public void runOpMode() {
@@ -66,6 +69,7 @@ public class CSTeleOP extends LinearOpMode {
         FR = hardwareMap.get(DcMotor.class, "fr");
         LS  = hardwareMap.get(DcMotor.class, "portMotor");
         RS = hardwareMap.get(DcMotor.class, "starboardMotor");
+        Sweep = hardwareMap.get(CRServo.class, "sweeper");
 
         BL.setDirection(DcMotor.Direction.FORWARD);
         FL.setDirection(DcMotor.Direction.FORWARD);
@@ -74,12 +78,14 @@ public class CSTeleOP extends LinearOpMode {
         LS.setDirection(DcMotor.Direction.REVERSE);
         RS.setDirection(DcMotor.Direction.FORWARD);
 
+
         FL.setPower(0);
         FR.setPower(0);
         BL.setPower(0);
         BR.setPower(0);
         LS.setPower(0);
         RS.setPower(0);
+        Sweep.setPower(0.0);
 
         FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -87,6 +93,7 @@ public class CSTeleOP extends LinearOpMode {
         BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         LS.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         RS.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
 
 
         // Wait for the game to start (driver presses PLAY)
@@ -105,6 +112,7 @@ public class CSTeleOP extends LinearOpMode {
         double slideTractionModifier = 0.02;
         float stillModifier = 9f;
         double flPWR, frPWR, blPWR, brPWR, lsPWR, rsPWR;
+        boolean sweep_on = false;
         double speed = 1;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
         float rx;
@@ -225,7 +233,16 @@ public class CSTeleOP extends LinearOpMode {
                 tractionModifier = 0.02;
             }
 
-            flCurrentPower -= Range.clip(flCurrentPower - flPWR,-tractionModifier,tractionModifier);
+            if (gamepad1.b){
+                Sweep.setPower(1.0);
+                sweep_on = true;
+            }
+            else if (gamepad1.y){
+                Sweep.setPower(0.0);
+                sweep_on = false;
+            }
+
+            flCurrentPower -= Range.clip(flCurrentPower - (0.95*flPWR),-tractionModifier,tractionModifier);
             frCurrentPower -= Range.clip(frCurrentPower - frPWR,-tractionModifier,tractionModifier);
             blCurrentPower -= Range.clip(blCurrentPower - blPWR,-tractionModifier,tractionModifier);
             brCurrentPower -= Range.clip(brCurrentPower - brPWR,-tractionModifier,tractionModifier);
@@ -248,6 +265,7 @@ public class CSTeleOP extends LinearOpMode {
             LS.setPower(lsCurrentPower);
             RS.setPower(rsCurrentPower);
 
+
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("fl", Double.toString(flPWR));
@@ -256,6 +274,7 @@ public class CSTeleOP extends LinearOpMode {
             telemetry.addData("br", Double.toString(brPWR));
             telemetry.addData("ls", Double.toString(lsPWR));
             telemetry.addData("rs", Double.toString(rsPWR));
+            telemetry.addData("sweeper", Boolean.toString(sweep_on));
 
             telemetry.update();
         }
