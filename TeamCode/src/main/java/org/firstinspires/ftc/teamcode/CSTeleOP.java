@@ -233,13 +233,12 @@ public class CSTeleOP extends LinearOpMode {
                 tractionModifier = 0.02;
             }
 
-            if (gamepad1.b){
-                Sweep.setPower(1.0);
-                sweep_on = true;
-            }
-            else if (gamepad1.y){
+            if (Math.abs(gamepad1.right_stick_y) < 0.05) {
                 Sweep.setPower(0.0);
                 sweep_on = false;
+            } else {
+                Sweep.setPower(-gamepad1.right_stick_y);
+                sweep_on = true;
             }
 
             flCurrentPower -= Range.clip(flCurrentPower - (0.95*flPWR),-tractionModifier,tractionModifier);
