@@ -149,7 +149,7 @@ public class CSTeleOP extends LinearOpMode {
             y = Math.asin(y)/(Math.PI/2);//convert to angle then divide by 90degrees(pi/2)
             telemetry.addData("dir", "x1 (%.2f), y1 (%.2f)", x, y);
 
-
+            /*
             //creep (i'm a weirdoooooo what the hell am i doin' here)
             if (gamepad1.dpad_up) {
                 y=0.3;
@@ -160,7 +160,7 @@ public class CSTeleOP extends LinearOpMode {
             } else if (gamepad1.dpad_right) {
                 x=0.3;
             }
-
+            */
 
             //do smth to drive with x and y
             telemetry.addData("dir", "x2 (%.2f), y2 (%.2f)", x, y);
@@ -239,6 +239,13 @@ public class CSTeleOP extends LinearOpMode {
             } else {
                 Sweep.setPower(-gamepad1.right_stick_y);
                 sweep_on = true;
+            }
+
+            if (gamepad1.left_stick_button) {
+                flPWR /= 3;
+                frPWR /= 3;
+                blPWR /= 3;
+                brPWR /= 3;
             }
 
             flCurrentPower -= Range.clip(flCurrentPower - (0.95*flPWR),-tractionModifier,tractionModifier);
