@@ -201,8 +201,8 @@ public class CSTeleOP extends LinearOpMode {
 
 
             rx = gamepad1.right_stick_x;//this is very touchy so it is divided by 4
-            if (Math.abs(rx) > 0.05) { // we do a little spinning
-                if (Math.abs(x) > 0.03 || Math.abs(y) > 0.03 || gamepad1.right_stick_button) {
+            if (Math.abs(rx) > 0.05 && !gamepad1.right_stick_button) { // we do a little spinning
+                if (Math.abs(x) > 0.03 || Math.abs(y) > 0.03 ) {
                     flPWR += rx;
                     blPWR += rx;
                     frPWR -= rx;
@@ -236,7 +236,7 @@ public class CSTeleOP extends LinearOpMode {
             if (Math.abs(gamepad1.right_stick_y) < 0.05) {
                 Sweep.setPower(0.0);
                 sweep_on = false;
-            } else {
+            } else if (gamepad1.right_stick_button) {
                 Sweep.setPower(gamepad1.right_stick_y);
                 sweep_on = true;
             }
