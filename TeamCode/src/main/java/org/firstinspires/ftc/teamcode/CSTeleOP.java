@@ -54,6 +54,7 @@ public class CSTeleOP extends LinearOpMode {
     private DcMotor LS = null;
     private DcMotor RS = null;
     private CRServo Sweep = null;
+    private Servo Plane;
 
     @Override
     public void runOpMode() {
@@ -70,6 +71,7 @@ public class CSTeleOP extends LinearOpMode {
         LS  = hardwareMap.get(DcMotor.class, "portMotor");
         RS = hardwareMap.get(DcMotor.class, "starboardMotor");
         Sweep = hardwareMap.get(CRServo.class, "sweeper");
+        Plane = hardwareMap.get(Servo.class, "plane");
 
         BL.setDirection(DcMotor.Direction.FORWARD);
         FL.setDirection(DcMotor.Direction.FORWARD);
@@ -86,6 +88,7 @@ public class CSTeleOP extends LinearOpMode {
         LS.setPower(0);
         RS.setPower(0);
         Sweep.setPower(0.0);
+        Plane.setPosition(0.0);
 
         FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
