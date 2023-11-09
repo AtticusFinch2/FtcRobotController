@@ -204,7 +204,7 @@ public class CSTeleOP extends LinearOpMode {
 
 
             rx = gamepad1.right_stick_x;//this is very touchy so it is divided by 4
-            if (Math.abs(rx) > 0.05 && !gamepad1.right_stick_button) { // we do a little spinning
+            if (Math.abs(rx) > 0.05) { // we do a little spinning
                 if (Math.abs(x) > 0.03 || Math.abs(y) > 0.03 ) {
                     flPWR += rx;
                     blPWR += rx;
@@ -236,11 +236,14 @@ public class CSTeleOP extends LinearOpMode {
                 tractionModifier = 0.02;
             }
 
-            if (Math.abs(gamepad1.right_stick_y) < 0.05) {
+            if (gamepad1.right_bumper && gamepad1.left_bumper || !gamepad1.right_bumper && !gamepad1.left_bumper) {
                 Sweep.setPower(0.0);
                 sweep_on = false;
-            } else if (gamepad1.right_stick_button) {
-                Sweep.setPower(gamepad1.right_stick_y);
+            } else if (gamepad1.right_bumper) {
+                Sweep.setPower(1.0);
+                sweep_on = true;
+            } else if (gamepad1.left_bumper) {
+                Sweep.setPower(-1.0);
                 sweep_on = true;
             }
 
@@ -249,6 +252,10 @@ public class CSTeleOP extends LinearOpMode {
                 frPWR /= 3;
                 blPWR /= 3;
                 brPWR /= 3;
+            }
+
+            if (gamepad1.y){
+                Plane.setPosition(1.0);
             }
 
             flCurrentPower -= Range.clip(flCurrentPower - (0.95*flPWR),-tractionModifier,tractionModifier);
@@ -284,6 +291,7 @@ public class CSTeleOP extends LinearOpMode {
             telemetry.addData("ls", Double.toString(lsPWR));
             telemetry.addData("rs", Double.toString(rsPWR));
             telemetry.addData("sweeper", Boolean.toString(sweep_on));
+            telemetry.addData("Luancher_pos",Double.toString(Plane.getPosition()));
 
             telemetry.update();
         }
