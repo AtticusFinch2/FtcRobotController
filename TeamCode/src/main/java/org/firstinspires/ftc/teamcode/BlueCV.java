@@ -29,6 +29,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import android.util.Size;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -47,8 +50,8 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@TeleOp(name = "Concept: TensorFlow Object Detection", group = "Concept")
-public class ConceptTensorFlowObjectDetection extends LinearOpMode {
+@Autonomous(name = "CVAuton", group = "Blue Alliance")
+public class BlueCV extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
@@ -63,34 +66,22 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
     private VisionPortal visionPortal;
     private static final String TFOD_MODEL_ASSET = "blueboxdetectorcenterstage.tflite";
     private static final String[] LABELS = {
-            "Box",
+            "Box", /**THE NAME OF THE LABEL ASSIGNED TO OUR TEAM MARKER*/
     };
+    private int leftBound = 200;/** variables for later classification */
+    private int rightBound = 800;
+    CSbot robot = new CSbot();
     @Override
     public void runOpMode() {
 
         initTfod();
-
-        // Wait for the DS start button to be touched.
-        telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
-        telemetry.addData(">", "Touch Play to start OpMode");
-        telemetry.update();
+        robot.init(hardwareMap);
         waitForStart();
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
-
                 telemetryTfod();
-
-                // Push telemetry to the Driver Station.
                 telemetry.update();
-
-                // Save CPU resources; can resume streaming when needed.
-                if (gamepad1.dpad_down) {
-                    visionPortal.stopStreaming();
-                } else if (gamepad1.dpad_up) {
-                    visionPortal.resumeStreaming();
-                }
-
                 // Share the CPU.
                 sleep(20);
             }
@@ -109,18 +100,18 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
         // Create the TensorFlow processor by using a builder.
         tfod = new TfodProcessor.Builder()
 
-            // Use setModelAssetName() if the TF Model is built in as an asset.
-            // Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
-            .setModelAssetName(TFOD_MODEL_ASSET)
-            //.setModelFileName(TFOD_MODEL_FILE)
+                // Use setModelAssetName() if the TF Model is built in as an asset.
+                // Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
+                .setModelAssetName(TFOD_MODEL_ASSET)
+                //.setModelFileName(TFOD_MODEL_FILE)
 
-            .setModelLabels(LABELS)
-            //.setIsModelTensorFlow2(true)
-            //.setIsModelQuantized(true)
-            //.setModelInputSize(300)
-            //.setModelAspectRatio(16.0 / 9.0)
+                .setModelLabels(LABELS)
+                //.setIsModelTensorFlow2(true)
+                //.setIsModelQuantized(true)
+                //.setModelInputSize(300)
+                //.setModelAspectRatio(16.0 / 9.0)
 
-            .build();
+                .build();
 
         // Create the vision portal by using a builder.
         VisionPortal.Builder builder = new VisionPortal.Builder();
@@ -133,18 +124,18 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
         }
 
         // Choose a camera resolution. Not all cameras support all resolutions.
-        //builder.setCameraResolution(new Size(640, 480));
+        builder.setCameraResolution(new Size(640, 480));
 
         // Enable the RC preview (LiveView).  Set "false" to omit camera monitoring.
-        //builder.enableCameraMonitoring(true);
+        builder.enableLiveView(true);
 
         // Set the stream format; MJPEG uses less bandwidth than default YUY2.
-        //builder.setStreamFormat(VisionPortal.StreamFormat.YUY2);
+        builder.setStreamFormat(VisionPortal.StreamFormat.MJPEG);
 
         // Choose whether or not LiveView stops if no processors are enabled.
         // If set "true", monitor shows solid orange screen if no processors enabled.
         // If set "false", monitor shows camera view without annotations.
-        //builder.setAutoStopLiveView(false);
+        builder.setAutoStopLiveView(false);
 
         // Set and enable the processor.
         builder.addProcessor(tfod);
@@ -153,7 +144,7 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
         visionPortal = builder.build();
 
         // Set confidence threshold for TFOD recognitions, at any time.
-        //tfod.setMinResultConfidence(0.75f);
+        tfod.setMinResultConfidence(0.70f);
 
         // Disable or re-enable the TFOD processor at any time.
         //visionPortal.setProcessorEnabled(tfod, true);
@@ -177,9 +168,17 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
             telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
             telemetry.addData("- TopLeft", "%.0f / %.0f", recognition.getLeft(), recognition.getTop());
             telemetry.addData("- BotRight", "%.0f / %.0f", recognition.getRight(), recognition.getBottom());
+            telemetry.addData("Spike #:", "%.0f", classifyXY(x,y));
             telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
         }   // end for() loop
 
     }   // end method telemetryTfod()
-
+    private int classifyXY(double x, double y){/** THIS IS THE CLASSIFICATION OF MODEL OUTPUT INTO SPIKE 1 2 or 3 */
+        if (x <= leftBound){
+            return 1;
+        } else if (x>=rightBound) {
+            return 3;
+        }
+        return 2;
+    }
 }   // end class
