@@ -65,11 +65,11 @@ public class DriveConstants {
      * small and gradually increase them later after everything is working. All distance units are
      * inches.
      */
-    public static double MAX_VEL = 35;
+    public static double MAX_VEL = 30;
     //MAX_RPM * (1/60) * GEAR_RATIO * WHEEL_RADIUS *2*Math.PI * 0.7
     //theoretical, 0.7 is so motors dont go TOO fast
     public static double MAX_ACCEL = 30;//TODO keep raising until path following suffers
-    public static double MAX_ANG_VEL = 9.62;//TODO above
+    public static double MAX_ANG_VEL = Math.toRadians(166);//TODO above
     public static double MAX_ANG_ACCEL = Math.toRadians(60);//TODO only found thru tuning
 
     /*
