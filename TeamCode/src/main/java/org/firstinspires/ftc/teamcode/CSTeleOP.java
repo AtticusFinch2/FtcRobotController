@@ -55,6 +55,8 @@ public class CSTeleOP extends LinearOpMode {
     private DcMotor RS = null;
     private CRServo Sweep = null;
     private Servo Plane;
+    private Servo Rotator;
+    private Servo Dropper;
 
     @Override
     public void runOpMode() {
@@ -72,6 +74,8 @@ public class CSTeleOP extends LinearOpMode {
         RS = hardwareMap.get(DcMotor.class, "starboardMotor");
         Sweep = hardwareMap.get(CRServo.class, "sweeper");
         Plane = hardwareMap.get(Servo.class, "plane");
+        Dropper = hardwareMap.get(Servo.class, "dropper");
+        Rotator = hardwareMap.get(Servo.class, "rotator");
 
         BL.setDirection(DcMotor.Direction.FORWARD);
         FL.setDirection(DcMotor.Direction.FORWARD);
@@ -135,7 +139,7 @@ public class CSTeleOP extends LinearOpMode {
             //This uses basic math to combine motions and is easier to drive straight.
             y = -gamepad1.left_stick_y;
             x = gamepad1.left_stick_x;
-            vert = gamepad1.right_trigger - gamepad1.left_trigger;
+            vert = gamepad1.left_trigger - gamepad1.right_trigger;
             telemetry.addData("dir", "xin (%.2f), yin (%.2f)", x, y);
             x = Range.clip(x, -1.0, 1.0) ; // gives values between -1 and 1, useful later
             y = Range.clip(y, -1.0, 1.0) ;
@@ -164,6 +168,17 @@ public class CSTeleOP extends LinearOpMode {
                 x=0.3;
             }
             */
+
+            if (gamepad1.dpad_up) {
+                Rotator.setPosition(0.18);
+            } else if (gamepad1.dpad_down) {
+                Rotator.setPosition(0.6);
+            }
+            if (gamepad1.x) {
+                Dropper.setPosition(0.7);
+            } else if (gamepad1.b) {
+                Dropper.setPosition(0.2);
+            }
 
             //do smth to drive with x and y
             telemetry.addData("dir", "x2 (%.2f), y2 (%.2f)", x, y);
@@ -292,6 +307,8 @@ public class CSTeleOP extends LinearOpMode {
             telemetry.addData("rs", Double.toString(rsPWR));
             telemetry.addData("sweeper", Boolean.toString(sweep_on));
             telemetry.addData("Luancher_pos",Double.toString(Plane.getPosition()));
+            telemetry.addData("Dropper",Double.toString(Dropper.getPosition()));
+            telemetry.addData("Rotator",Double.toString(Rotator.getPosition()));
 
             telemetry.update();
         }
