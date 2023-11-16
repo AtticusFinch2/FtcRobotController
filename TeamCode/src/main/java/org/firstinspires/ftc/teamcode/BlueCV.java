@@ -50,7 +50,7 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Autonomous(name = "CVAuton", group = "Blue Alliance")
+@Autonomous(name = "Blue Alliance", group = "CV auton")
 public class BlueCV extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
@@ -124,7 +124,8 @@ public class BlueCV extends LinearOpMode {
         }
 
         // Choose a camera resolution. Not all cameras support all resolutions.
-        builder.setCameraResolution(new Size(640, 480)); // 480p but pretty sure model is in 720p TODO: Test Resolution
+        builder.setCameraResolution(new Size(1920, 1080)); // model is in 720p, but can be used on various resolutions
+        // it runs when you put in 1280x720, but it says that it's unsupported and auto-chooses a new resolution with the same aspect ratio
 
         // Enable the RC preview (LiveView).  Set "false" to omit camera monitoring.
         builder.enableLiveView(true);
@@ -168,15 +169,15 @@ public class BlueCV extends LinearOpMode {
             telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
             telemetry.addData("- TopLeft", "%.0f / %.0f", recognition.getLeft(), recognition.getTop());
             telemetry.addData("- BotRight", "%.0f / %.0f", recognition.getRight(), recognition.getBottom());
-            telemetry.addData("Spike #:", "%.0f", classifyXY(x,y));
+            telemetry.addData("Spike #:", "%.0f", classifyXY(recognition.getLeft(),recognition.getTop(),recognition.getRight(),recognition.getBottom()));
             telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
         }   // end for() loop
 
     }   // end method telemetryTfod()
-    private int classifyXY(double x, double y){/** THIS IS THE CLASSIFICATION OF MODEL OUTPUT INTO SPIKE 1 2 or 3 */
-        if (x <= leftBound){
+    private double classifyXY(double x1, double y1, double x2, double y2){/** THIS IS THE CLASSIFICATION OF MODEL OUTPUT INTO SPIKE 1 2 or 3 */
+        if (x2 <= leftBound){
             return 1;
-        } else if (x>=rightBound) {
+        } else if (x1>=rightBound) {
             return 3;
         }
         return 2;

@@ -18,7 +18,7 @@ class WebCamBot{ //Webcam only, this is for testing purposes
         map = maps;
     }
 }
-@Autonomous(name = "render Test")
+@Autonomous(name = "stream Test")
 public class VisionTest extends LinearOpMode {
 
 
@@ -51,7 +51,7 @@ public class VisionTest extends LinearOpMode {
             @Override
             public void onOpened()
             {
-                webcam.startStreaming(640,480, OpenCvCameraRotation.SIDEWAYS_RIGHT);
+                webcam.startStreaming(1920,1080, OpenCvCameraRotation.SENSOR_NATIVE);
             }
 
             @Override
