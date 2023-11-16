@@ -172,22 +172,24 @@ public class CSTeleOP extends LinearOpMode {
             */
 
             if (gamepad1.dpad_up) {
-                Rotator.setPosition(0.18 + servoTrim);
+                Rotator.setPosition(0.13 + servoTrim);
             } else if (gamepad1.dpad_down) {
-                Rotator.setPosition(0.6 + servoTrim);
+                Rotator.setPosition(0.55 + servoTrim);
+            } else if (gamepad1.a) {
+                Rotator.setPosition(0.21 + servoTrim);
             }
-            if (gamepad1.dpad_left && runtime.seconds() - lastTrimChange > 0.3) {
+            if (gamepad1.dpad_left && runtime.seconds() - lastTrimChange > 0.15) {
                 servoTrim += 0.01;
                 lastTrimChange = runtime.seconds();
             }
-            if (gamepad1.dpad_right && runtime.seconds() - lastTrimChange > 0.3) {
+            if (gamepad1.dpad_right && runtime.seconds() - lastTrimChange > 0.15) {
                 servoTrim -= 0.01;
                 lastTrimChange = runtime.seconds();
             }
             if (gamepad1.x) {
                 Dropper.setPosition(0.7);
             } else if (gamepad1.b) {
-                Dropper.setPosition(0.2);
+                Dropper.setPosition(0.3);
             }
 
             //do smth to drive with x and y
@@ -255,12 +257,6 @@ public class CSTeleOP extends LinearOpMode {
             rsPWR = Range.clip(rsPWR, -1.0, 1.0) ;
             // Send calculated power to wheels
 
-            if (gamepad1.a) {
-                tractionModifier = 0.5;
-            } else {
-                tractionModifier = 0.02;
-            }
-
             if (gamepad1.right_bumper && gamepad1.left_bumper || !gamepad1.right_bumper && !gamepad1.left_bumper) {
                 Sweep.setPower(0.0);
                 sweep_on = false;
@@ -304,7 +300,7 @@ public class CSTeleOP extends LinearOpMode {
             BR.setPower(brCurrentPower * 0.80);
 
             LS.setPower(lsCurrentPower);
-            RS.setPower(rsCurrentPower);
+            RS.setPower(rsCurrentPower * 0.6);
 
 
             // Show the elapsed game time and wheel power.
