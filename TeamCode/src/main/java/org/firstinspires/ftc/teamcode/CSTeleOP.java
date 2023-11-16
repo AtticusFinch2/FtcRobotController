@@ -117,8 +117,10 @@ public class CSTeleOP extends LinearOpMode {
         double rsCurrentPower = 0;
         double tractionModifier = 0.02;
         double slideTractionModifier = 0.02;
+        double servoTrim = 0.00;
         float stillModifier = 9f;
         double flPWR, frPWR, blPWR, brPWR, lsPWR, rsPWR;
+        double lastTrimChange = runtime.seconds();
         boolean sweep_on = false;
         double speed = 1;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
@@ -170,9 +172,17 @@ public class CSTeleOP extends LinearOpMode {
             */
 
             if (gamepad1.dpad_up) {
-                Rotator.setPosition(0.18);
+                Rotator.setPosition(0.18 + servoTrim);
             } else if (gamepad1.dpad_down) {
-                Rotator.setPosition(0.6);
+                Rotator.setPosition(0.6 + servoTrim);
+            }
+            if (gamepad1.dpad_left && runtime.seconds() - lastTrimChange > 0.3) {
+                servoTrim += 0.01;
+                lastTrimChange = runtime.seconds();
+            }
+            if (gamepad1.dpad_right && runtime.seconds() - lastTrimChange > 0.3) {
+                servoTrim -= 0.01;
+                lastTrimChange = runtime.seconds();
             }
             if (gamepad1.x) {
                 Dropper.setPosition(0.7);
@@ -309,7 +319,7 @@ public class CSTeleOP extends LinearOpMode {
             telemetry.addData("Luancher_pos",Double.toString(Plane.getPosition()));
             telemetry.addData("Dropper",Double.toString(Dropper.getPosition()));
             telemetry.addData("Rotator",Double.toString(Rotator.getPosition()));
-
+            telemetry.addData("ServoTrim",Double.toString(servoTrim));
             telemetry.update();
         }
     }
