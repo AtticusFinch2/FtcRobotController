@@ -117,11 +117,13 @@ public class CSTeleOP extends LinearOpMode {
         double rsCurrentPower = 0;
         double tractionModifier = 0.02;
         double slideTractionModifier = 0.02;
+        double lastCreepChange = runtime.seconds();
         double servoTrim = 0.00;
         float stillModifier = 9f;
         double flPWR, frPWR, blPWR, brPWR, lsPWR, rsPWR;
         double lastTrimChange = runtime.seconds();
         boolean sweep_on = false;
+        boolean creeping = false;
         double speed = 1;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
         float rx;
@@ -172,7 +174,7 @@ public class CSTeleOP extends LinearOpMode {
             */
 
             if (gamepad1.dpad_up) {
-                Rotator.setPosition(0.13 + servoTrim);
+                Rotator.setPosition(0.16 + servoTrim);
             } else if (gamepad1.dpad_down) {
                 Rotator.setPosition(0.55 + servoTrim);
             } else if (gamepad1.a) {
@@ -268,7 +270,12 @@ public class CSTeleOP extends LinearOpMode {
                 sweep_on = true;
             }
 
-            if (gamepad1.left_stick_button) {
+            if (gamepad1.left_stick_button && runtime.seconds() - lastCreepChange > 0.1) {
+                creeping = !creeping;
+                lastCreepChange = runtime.seconds();
+            }
+
+            if (creeping) {
                 flPWR /= 3;
                 frPWR /= 3;
                 blPWR /= 3;
