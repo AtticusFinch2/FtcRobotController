@@ -34,7 +34,7 @@ public class DriveConstants {
      */
     public static final boolean RUN_USING_ENCODER = true;
     public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(2, 0.1, 0.3,
-            getMotorVelocityF(2000));
+            getMotorVelocityF(2340));
 //f needs to be 13
     /*
      * These are physical constants that can be determined from your robot (including the track
