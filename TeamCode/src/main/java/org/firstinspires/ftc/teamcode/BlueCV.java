@@ -68,8 +68,8 @@ public class BlueCV extends LinearOpMode {
     private static final String[] LABELS = {
             "Box", /**THE NAME OF THE LABEL ASSIGNED TO OUR TEAM MARKER*/
     };
-    private int leftBound = 200;/** variables for later classification */
-    private int rightBound = 800;
+    private int leftBound = 400;/** variables for later classification */
+    private int rightBound = 600;
     CSbot robot = new CSbot();
     @Override
     public void runOpMode() {
