@@ -57,6 +57,7 @@ public class CSTeleOP extends LinearOpMode {
     private Servo Plane;
     private Servo Rotator;
     private Servo Dropper;
+    private Servo Backhand;
 
     @Override
     public void runOpMode() {
@@ -76,6 +77,7 @@ public class CSTeleOP extends LinearOpMode {
         Plane = hardwareMap.get(Servo.class, "plane");
         Dropper = hardwareMap.get(Servo.class, "dropper");
         Rotator = hardwareMap.get(Servo.class, "rotator");
+        Backhand = hardwareMap.get(Servo.class, "backhand");
 
         BL.setDirection(DcMotor.Direction.FORWARD);
         FL.setDirection(DcMotor.Direction.FORWARD);
@@ -118,12 +120,16 @@ public class CSTeleOP extends LinearOpMode {
         double tractionModifier = 0.02;
         double slideTractionModifier = 0.02;
         double lastCreepChange = runtime.seconds();
+        double lastDropChange = runtime.seconds();
+        double lastBackhandChange = runtime.seconds();
         double servoTrim = 0.00;
         float stillModifier = 9f;
         double flPWR, frPWR, blPWR, brPWR, lsPWR, rsPWR;
         double lastTrimChange = runtime.seconds();
         boolean sweep_on = false;
         boolean creeping = false;
+        boolean backhanding = false;
+        boolean dropping = false;
         double speed = 1;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
         float rx;
@@ -174,11 +180,11 @@ public class CSTeleOP extends LinearOpMode {
             */
 
             if (gamepad1.dpad_up) {
-                Rotator.setPosition(0.16 + servoTrim);
+                Rotator.setPosition(0.11 + servoTrim);
             } else if (gamepad1.dpad_down) {
-                Rotator.setPosition(0.55 + servoTrim);
+                Rotator.setPosition(0.48 + servoTrim);
             } else if (gamepad1.a) {
-                Rotator.setPosition(0.21 + servoTrim);
+                Rotator.setPosition(0.24 + servoTrim);
             }
             if (gamepad1.dpad_left && runtime.seconds() - lastTrimChange > 0.15) {
                 servoTrim += 0.01;
@@ -188,10 +194,23 @@ public class CSTeleOP extends LinearOpMode {
                 servoTrim -= 0.01;
                 lastTrimChange = runtime.seconds();
             }
-            if (gamepad1.x) {
+            if (gamepad1.b && runtime.seconds() - lastDropChange > 0.2) {
+                dropping = !dropping;
+                lastDropChange = runtime.seconds();
+            }
+            if (gamepad1.x && runtime.seconds() - lastBackhandChange > 0.2) {
+                backhanding = !backhanding;
+                lastBackhandChange = runtime.seconds();
+            }
+            if (!dropping) {
                 Dropper.setPosition(0.7);
-            } else if (gamepad1.b) {
+            } else{
                 Dropper.setPosition(0.3);
+            }
+            if (backhanding) {
+                Backhand.setPosition(0.5);
+            } else {
+                Backhand.setPosition(0.0);
             }
 
             //do smth to drive with x and y
@@ -282,9 +301,10 @@ public class CSTeleOP extends LinearOpMode {
                 brPWR /= 3;
             }
 
-            if (gamepad1.y){
+            if (gamepad1.y && runtime.seconds() > 90.0){
                 Plane.setPosition(1.0);
             }
+
 
             flCurrentPower -= Range.clip(flCurrentPower - (0.95*flPWR),-tractionModifier,tractionModifier);
             frCurrentPower -= Range.clip(frCurrentPower - frPWR,-tractionModifier,tractionModifier);
@@ -323,6 +343,7 @@ public class CSTeleOP extends LinearOpMode {
             telemetry.addData("Dropper",Double.toString(Dropper.getPosition()));
             telemetry.addData("Rotator",Double.toString(Rotator.getPosition()));
             telemetry.addData("ServoTrim",Double.toString(servoTrim));
+            telemetry.addData("Backhand",Double.toString(Backhand.getPosition()));
             telemetry.update();
         }
     }
