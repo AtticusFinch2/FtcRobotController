@@ -24,7 +24,7 @@ import java.util.List;
 @Autonomous(name = "RedAuton1", group = "RedWorking")
 public class RedAuton1 extends LinearOpMode {
     MainRobot robot;
-    int spike;
+    int spike=2;
     @Override
     public void runOpMode() {
 

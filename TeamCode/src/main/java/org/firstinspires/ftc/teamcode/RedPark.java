@@ -21,10 +21,10 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
-@Autonomous(name = "RedPark", group = "RedWorking")
+@Autonomous(name = "RedPark")
 public class RedPark extends LinearOpMode {
     MainRobot robot;
-    int spike;
+    int spike=2;
     public Pose2d startPose = new Pose2d(24,-70,Math.toRadians(-180));
     @Override
     public void runOpMode() {
