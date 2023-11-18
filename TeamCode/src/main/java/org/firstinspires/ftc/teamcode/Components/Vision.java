@@ -17,7 +17,8 @@ public class Vision {
     private TfodProcessor tfod;
 
     private VisionPortal visionPortal;
-    private static final String TFOD_MODEL_ASSET = "blueboxdetectorcenterstage.tflite";
+    private static final String TFOD_MODEL_ASSET_BLUE = "blueboxdetectorcenterstage.tflite";
+    private static final String TFOD_MODEL_ASSET_RED = "redboxdetectorcenterstage.tflite";
 
     /**           IF YOU ARE GOING TO CHANGE THE MODEL CHANGE THIS FILE NAME
      *
@@ -29,18 +30,26 @@ public class Vision {
     private int leftBound = 400;/** variables for later classification */
     private int rightBound = 600;
     private List<Recognition> currentRecognitions;
-    public Vision (HardwareMap hardwareMap){
-        initTfod(hardwareMap);
+    public Vision (HardwareMap hardwareMap, boolean isBlue){
+        initTfod(hardwareMap, isBlue);
     }
 
 
-    private void initTfod(HardwareMap hardwareMap) {
+    private void initTfod(HardwareMap hardwareMap, boolean isBlue) {
+        if(isBlue){
+            tfod = new TfodProcessor.Builder()
+                    .setModelAssetName(TFOD_MODEL_ASSET_BLUE)
+                    .setModelLabels(LABELS)
+                    //.setModelAspectRatio(16.0 / 9.0)
+                    .build();
+        } else{
+            tfod = new TfodProcessor.Builder()
+                    .setModelAssetName(TFOD_MODEL_ASSET_RED)
+                    .setModelLabels(LABELS)
+                    //.setModelAspectRatio(16.0 / 9.0)
+                    .build();
+        }
 
-        tfod = new TfodProcessor.Builder()
-                .setModelAssetName(TFOD_MODEL_ASSET)
-                .setModelLabels(LABELS)
-                //.setModelAspectRatio(16.0 / 9.0)
-                .build();
         VisionPortal.Builder builder = new VisionPortal.Builder();
 
         builder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
@@ -80,7 +89,7 @@ public class Vision {
             break;// idk if anyone is gonna read this but i <3 breaks
         }
     }
-    public int getSpike(){
+    public int getSpike(){ // THIS IS HOW WE ARE CLASSIFYING THE SPIKE
         findFirstBox();
         if (x2 <= leftBound){
             return 1;
