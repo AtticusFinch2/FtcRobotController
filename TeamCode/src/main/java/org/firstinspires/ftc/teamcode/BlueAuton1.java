@@ -30,9 +30,9 @@ public class BlueAuton1 extends LinearOpMode {
 
         robot = new MainRobot(hardwareMap);
         waitForStart();
+        doTheCvThing();
         while (opModeIsActive()) {
             robot.pause(1200);
-            doTheCvThing();
             if (spike == 1) {
                 Path1();
                 break;
