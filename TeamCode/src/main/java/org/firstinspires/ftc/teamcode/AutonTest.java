@@ -20,35 +20,20 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
-import java.util.List;
-@Autonomous(name = "RedPark")
-public class RedPark extends LinearOpMode {
+@Autonomous(name = "Test")
+public class AutonTest extends LinearOpMode {
     MainRobot robot;
-    int spike=2;
-    public Pose2d startPose = new Pose2d(24,-70,Math.toRadians(90));
+
     @Override
     public void runOpMode() {
 
         robot = new MainRobot(hardwareMap);
         waitForStart();
-        robot.pause(1200);
-        //doTheCvThing();
-        robot.setPoseEstimate(startPose);
-        Trajectory straferight = robot.trajectoryBuilder(startPose)
-                .strafeRight(28)
+        Trajectory strafeleft = robot.trajectoryBuilder(robot.getPoseEstimate())
+                .strafeLeft(28)
                 .build();
-        startPose = straferight.end();
+        robot.followTrajectory(strafeleft);
 
-        robot.followTrajectory(straferight);
 
     }
-    /**
-    public void doTheCvThing() {
-        robot.visionred.open();
-        robot.pause(100);// hoping this is enough to get the camera booted up
-        spike = robot.visionred.getSpike();
-        robot.visionred.close();
-    }
-
-*/
 }

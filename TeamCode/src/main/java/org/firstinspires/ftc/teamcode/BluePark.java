@@ -32,7 +32,7 @@ public class BluePark extends LinearOpMode {
         robot = new MainRobot(hardwareMap);
         waitForStart();
         robot.pause(1200);
-        doTheCvThing();
+        //doTheCvThing();
         robot.setPoseEstimate(startPose);
         Trajectory strafeleft = robot.trajectoryBuilder(startPose)
                 .strafeLeft(28)
@@ -44,6 +44,7 @@ public class BluePark extends LinearOpMode {
 
     }
 
+    /**
     public void doTheCvThing() {
         robot.visionblue.open();
         robot.pause(100);// hoping this is enough to get the camera booted up
@@ -51,5 +52,5 @@ public class BluePark extends LinearOpMode {
         robot.visionblue.close();
     }
 
-
+    */
 }

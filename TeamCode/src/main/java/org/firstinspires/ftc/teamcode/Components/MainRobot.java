@@ -28,10 +28,10 @@ public class MainRobot extends SampleMecanumDrive{
         super(hardwareMap);
 
         //cv
-        visionblue = new Vision(hardwareMap, true);
-        visionblue.close(); // dont put strain on the cpu
-        visionred = new Vision(hardwareMap, false);
-        visionred.close();
+       // visionblue = new Vision(hardwareMap, true);
+        //visionblue.close(); // dont put strain on the cpu
+        //visionred = new Vision(hardwareMap, false);
+        //visionred.close();
 
 
 
