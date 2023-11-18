@@ -351,7 +351,7 @@ public class CSTeleOP extends LinearOpMode {
                 brPWR /= 3;
             }
 
-            if (gamepad1.y && runtime.seconds() > 90.0){
+            if (gamepad1.y){
                 Plane.setPosition(1.0);
             }
 
