@@ -25,7 +25,7 @@ import java.util.List;
 public class BluePark extends LinearOpMode {
     MainRobot robot;
     int spike =2;
-    public Pose2d startPose = new Pose2d(24,-70,Math.toRadians(0));
+    public Pose2d startPose = new Pose2d(24,-70,Math.toRadians(-90));
     @Override
     public void runOpMode() {
 
