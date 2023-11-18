@@ -25,7 +25,7 @@ import java.util.List;
 public class BluePark extends LinearOpMode {
     MainRobot robot;
     int spike;
-    public Pose2d startPose = new Pose2d(24,-70,Math.toRadians(-180));
+    public Pose2d startPose = new Pose2d(24,-70,Math.toRadians(0));
     @Override
     public void runOpMode() {
 
@@ -48,10 +48,10 @@ public class BluePark extends LinearOpMode {
     }
 
     public void doTheCvThing() {
-        robot.visionred.open();
+        robot.visionblue.open();
         robot.pause(100);// hoping this is enough to get the camera booted up
-        spike = robot.visionred.getSpike();
-        robot.visionred.close();
+        spike = robot.visionblue.getSpike();
+        robot.visionblue.close();
     }
 
 
