@@ -21,7 +21,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
-@Autonomous(name = "RedAuton1", group = "RedWorking")
+@Autonomous(name = "RedAuton1")
 public class RedAuton1 extends LinearOpMode {
     MainRobot robot;
     int spike=2;
