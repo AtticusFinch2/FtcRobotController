@@ -25,15 +25,41 @@ import java.util.List;
 public class BlueAuton1 extends LinearOpMode {
     MainRobot robot;
     int spike = 2;
+    public Pose2d startPose = new Pose2d(24, 70, Math.toRadians(90));
     @Override
     public void runOpMode() {
 
         robot = new MainRobot(hardwareMap);
         waitForStart();
         robot.servos.Rotator.setPosition(0.24);
-        doTheCvThing();
-        while (opModeIsActive()) {
-            robot.pause(1200);
+        //doTheCvThing();
+        robot.pause(1200);
+        robot.setPoseEstimate(startPose);
+        Trajectory strafe3 = robot.trajectoryBuilder(startPose)
+                .strafeLeft(14)
+                .build();
+        startPose = strafe3.end();
+
+        TrajectorySequence turn3 = robot.trajectorySequenceBuilder(strafe3.end())
+                .turn(Math.toRadians(-90))
+                .build();
+        startPose = turn3.end();
+
+        Trajectory firstright3 = robot.trajectoryBuilder(turn3.end())
+                .strafeLeft(14)
+                .build();
+        startPose = firstright3.end();
+
+        robot.followTrajectory(strafe3);
+        robot.pause(300);
+        robot.followTrajectorySequence(turn3);
+        robot.pause(300);
+        robot.followTrajectory(firstright3);
+        robot.pause(300);
+        pixel1();
+
+
+            /**
             if (spike == 1) {
                 Path1();
                 break;
@@ -48,13 +74,17 @@ public class BlueAuton1 extends LinearOpMode {
         }
 
     }
-    public void doTheCvThing(){
+
+     * public void doTheCvThing(){
         robot.visionblue.open();
         robot.pause(100);// hoping this is enough to get the camera booted up
         spike = robot.visionblue.getSpike();
         robot.visionblue.close();
     }
-    public Pose2d startPose = new Pose2d(24, 70, Math.toRadians(-180));
+     */
+    }
+
+    /**
     public void Path1() {
         robot.setPoseEstimate(startPose);
         Trajectory turnstrafe1 = robot.trajectoryBuilder(startPose)
@@ -105,32 +135,10 @@ public class BlueAuton1 extends LinearOpMode {
         robot.pause(300);
 
     }
+*/
 
-    public void Path3() {
-        robot.setPoseEstimate(startPose);
-        Trajectory strafe3 = robot.trajectoryBuilder(startPose)
-                .strafeRight(10)
-                .build();
-        startPose = strafe3.end();
 
-        TrajectorySequence turn3 = robot.trajectorySequenceBuilder(strafe3.end())
-                .turn(Math.toRadians(-90))
-                .build();
-        startPose = turn3.end();
 
-        Trajectory firstright3 = robot.trajectoryBuilder(turn3.end())
-                .strafeLeft(14)
-                .build();
-        startPose = firstright3.end();
-
-        robot.followTrajectory(strafe3);
-        robot.pause(300);
-        robot.followTrajectorySequence(turn3);
-        robot.pause(300);
-        robot.followTrajectory(firstright3);
-        robot.pause(300);
-
-    }
 
     public void pixel1(){
         robot.setPoseEstimate(startPose);
@@ -172,7 +180,6 @@ public class BlueAuton1 extends LinearOpMode {
         robot.followTrajectory(rightpark);
         robot.pause(300);
         robot.followTrajectory(creepbackward);
-        robot.pause(30000);
 
 
 

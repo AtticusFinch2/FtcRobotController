@@ -24,8 +24,8 @@ import java.util.List;
 @Autonomous(name = "RedPark")
 public class RedPark extends LinearOpMode {
     MainRobot robot;
-    int spike=2;
-    public Pose2d startPose = new Pose2d(24,-70,Math.toRadians(90));
+    int spike =2;
+    public Pose2d startPose = new Pose2d(24,-70,Math.toRadians(-90));
     @Override
     public void runOpMode() {
 
@@ -34,21 +34,31 @@ public class RedPark extends LinearOpMode {
         robot.pause(1200);
         //doTheCvThing();
         robot.setPoseEstimate(startPose);
-        Trajectory straferight = robot.trajectoryBuilder(startPose)
-                .strafeRight(28)
+
+        Trajectory ff = robot.trajectoryBuilder(startPose)
+                .forward(2)
+                .build();
+        startPose = ff.end();
+
+        Trajectory straferight = robot.trajectoryBuilder(ff.end())
+                .strafeRight(54)
                 .build();
         startPose = straferight.end();
 
+        robot.followTrajectory(ff);
+        robot.pause(300);
         robot.followTrajectory(straferight);
 
-    }
-    /**
-    public void doTheCvThing() {
-        robot.visionred.open();
-        robot.pause(100);// hoping this is enough to get the camera booted up
-        spike = robot.visionred.getSpike();
-        robot.visionred.close();
+
     }
 
-*/
+    /**
+     public void doTheCvThing() {
+     robot.visionblue.open();
+     robot.pause(100);// hoping this is enough to get the camera booted up
+     spike = robot.visionblue.getSpike();
+     robot.visionblue.close();
+     }
+
+     */
 }

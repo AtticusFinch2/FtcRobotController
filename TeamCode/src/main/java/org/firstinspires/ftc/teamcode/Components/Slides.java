@@ -14,8 +14,8 @@ public class Slides {
     public Slides (HardwareMap hardwareMap) {
         LS = hardwareMap.get (DcMotor.class, "portMotor");
         RS = hardwareMap.get (DcMotor.class, "starboardMotor");
-        LS.setDirection(DcMotor.Direction.REVERSE);
-        RS.setDirection(DcMotor.Direction.FORWARD);
+        LS.setDirection(DcMotor.Direction.FORWARD);
+        RS.setDirection(DcMotor.Direction.REVERSE);
         LS.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         RS.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LS.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

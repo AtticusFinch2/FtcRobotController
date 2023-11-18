@@ -34,11 +34,19 @@ public class BlueParkLeft extends LinearOpMode {
         robot.pause(1200);
         //doTheCvThing();
         robot.setPoseEstimate(startPose);
-        Trajectory strafeleft = robot.trajectoryBuilder(startPose)
-                .strafeLeft(28)
+
+        Trajectory ff = robot.trajectoryBuilder(startPose)
+                .forward(4)
+                .build();
+        startPose = ff.end();
+
+        Trajectory strafeleft = robot.trajectoryBuilder(ff.end())
+                .strafeLeft(54)
                 .build();
         startPose = strafeleft.end();
 
+        robot.followTrajectory(ff);
+        robot.pause(300);
         robot.followTrajectory(strafeleft);
 
 
