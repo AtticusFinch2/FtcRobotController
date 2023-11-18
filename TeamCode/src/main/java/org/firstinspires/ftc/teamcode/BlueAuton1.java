@@ -25,11 +25,13 @@ import java.util.List;
 public class BlueAuton1 extends LinearOpMode {
     MainRobot robot;
     int spike;
+
     @Override
     public void runOpMode() {
 
         robot = new MainRobot(hardwareMap);
         waitForStart();
+        robot.servos.Rotator.setPosition(0.24);
         doTheCvThing();
         while (opModeIsActive()) {
             robot.pause(1200);
@@ -62,7 +64,7 @@ public class BlueAuton1 extends LinearOpMode {
         startPose = turnstrafe1.end();
 
         Trajectory firstforward1 = robot.trajectoryBuilder(turnstrafe1.end())
-                .forward(14)
+                .forward(10)
                 .build();
         startPose = firstforward1.end();
 
@@ -87,7 +89,7 @@ public class BlueAuton1 extends LinearOpMode {
         startPose = turnstrafe2.end();
 
         Trajectory firstforward2 = robot.trajectoryBuilder(turnstrafe2.end())
-                .forward(14)
+                .forward(10)
                 .build();
         startPose = firstforward2.end();
 
@@ -108,7 +110,7 @@ public class BlueAuton1 extends LinearOpMode {
     public void Path3() {
         robot.setPoseEstimate(startPose);
         Trajectory strafe3 = robot.trajectoryBuilder(startPose)
-                .strafeRight(14)
+                .strafeRight(10)
                 .build();
         startPose = strafe3.end();
 
@@ -134,14 +136,47 @@ public class BlueAuton1 extends LinearOpMode {
     public void pixel1(){
         robot.setPoseEstimate(startPose);
         Trajectory creepforward = robot.trajectoryBuilder(startPose)
-                .forward(3)
+                .forward(6)
                 .build();
         startPose = creepforward.end();
 
         Trajectory creepbackward = robot.trajectoryBuilder(startPose)
-                .back(3)
+                .back(6)
                 .build();
         startPose = creepbackward.end();
+
+        Trajectory rightpark = robot.trajectoryBuilder(startPose)
+                .strafeRight(14)
+                .build();
+        startPose = rightpark.end();
+
+        robot.slides.setSlidesPower(1.0);
+        robot.pause(1000);
+        robot.servos.Backhand.setPosition(0.5); //open
+        robot.pause(300);
+        robot.servos.Rotator.setPosition(0.48);
+        robot.pause(400);
+        robot.followTrajectory(creepbackward);
+        robot.pause(1000);
+        robot.servos.Dropper.setPosition(0.3);
+        robot.pause(500);
+        robot.followTrajectory(creepforward);
+        robot.pause(1000);
+        robot.servos.Dropper.setPosition(0.7);
+        robot.pause(200);
+        robot.servos.Backhand.setPosition(0.0); //close
+        robot.pause(300);
+        robot.servos.Rotator.setPosition(0.24);
+        robot.pause(300);
+        robot.slides.setSlidesPower(-1.0);
+        robot.pause(1000);
+        robot.followTrajectory(rightpark);
+        robot.pause(300);
+        robot.followTrajectory(creepbackward);
+        robot.pause(30000);
+
+
+
 
     /** brady: everything above is initial movement
      * MAKE SURE TO CALL PIXEL1 AT END OF EACH PATH
