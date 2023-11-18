@@ -37,7 +37,6 @@ public class RedAuton1 extends LinearOpMode {
     public void doTheCvThing(){
         robot.visionred.open();
         robot.pause(500);// hoping this is enough to get the camera booted up
-        robot.visionred.findFirstBox();
         spike = robot.visionred.getSpike();
         robot.visionred.close();
     }

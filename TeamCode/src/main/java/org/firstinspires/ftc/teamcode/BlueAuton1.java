@@ -42,7 +42,6 @@ public class BlueAuton1 extends LinearOpMode {
     public void doTheCvThing(){
         robot.visionblue.open();
         robot.pause(100);// hoping this is enough to get the camera booted up
-        robot.visionblue.findFirstBox();
         spike = robot.visionblue.getSpike();
         robot.visionblue.close();
     }

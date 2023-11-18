@@ -89,7 +89,7 @@ public class Vision {
             break;// idk if anyone is gonna read this but i <3 breaks
         }
     }
-    public int getSpike(){ // THIS IS HOW WE ARE CLASSIFYING THE SPIKE
+    public int getSpike(){ /** THIS IS HOW WE ARE CLASSIFYING THE SPIKE*/
         findFirstBox();
         if (x2 <= leftBound){
             return 1;
