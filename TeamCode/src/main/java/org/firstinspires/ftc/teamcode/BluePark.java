@@ -31,19 +31,16 @@ public class BluePark extends LinearOpMode {
 
         robot = new MainRobot(hardwareMap);
         waitForStart();
-        while (opModeIsActive()) {
-            robot.pause(1200);
-            doTheCvThing();
-            robot.setPoseEstimate(startPose);
-            Trajectory strafeleft = robot.trajectoryBuilder(startPose)
-                    .strafeLeft(28)
-                    .build();
-            startPose = strafeleft.end();
+        robot.pause(1200);
+        doTheCvThing();
+        robot.setPoseEstimate(startPose);
+        Trajectory strafeleft = robot.trajectoryBuilder(startPose)
+                .strafeLeft(28)
+                .build();
+        startPose = strafeleft.end();
 
-            robot.followTrajectory(strafeleft);
-            robot.pause(30000);
+        robot.followTrajectory(strafeleft);
 
-        }
 
     }
 

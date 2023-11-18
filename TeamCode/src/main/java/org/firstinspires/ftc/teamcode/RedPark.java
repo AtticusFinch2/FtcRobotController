@@ -31,19 +31,15 @@ public class RedPark extends LinearOpMode {
 
         robot = new MainRobot(hardwareMap);
         waitForStart();
-        while (opModeIsActive()) {
-            robot.pause(1200);
-            doTheCvThing();
-            robot.setPoseEstimate(startPose);
-            Trajectory straferight = robot.trajectoryBuilder(startPose)
-                    .strafeRight(28)
-                    .build();
-            startPose = straferight.end();
+        robot.pause(1200);
+        doTheCvThing();
+        robot.setPoseEstimate(startPose);
+        Trajectory straferight = robot.trajectoryBuilder(startPose)
+                .strafeRight(28)
+                .build();
+        startPose = straferight.end();
 
-            robot.followTrajectory(straferight);
-            robot.pause(30000);
-
-        }
+        robot.followTrajectory(straferight);
 
     }
 
