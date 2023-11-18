@@ -21,8 +21,8 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
-@Autonomous(name = "BluePark")
-public class BluePark extends LinearOpMode {
+@Autonomous(name = "BlueParkLeft")
+public class BlueParkLeft extends LinearOpMode {
     MainRobot robot;
     int spike =2;
     public Pose2d startPose = new Pose2d(24,-70,Math.toRadians(-90));
