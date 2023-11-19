@@ -29,7 +29,7 @@ public class BlueParkLeft extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        robot = new MainRobot(hardwareMap);
+        robot = new MainRobot(hardwareMap, true);
         waitForStart();
         robot.pause(1200);
         //doTheCvThing();
@@ -52,13 +52,13 @@ public class BlueParkLeft extends LinearOpMode {
 
     }
 
-    /**
-    public void doTheCvThing() {
-        robot.visionblue.open();
-        robot.pause(100);// hoping this is enough to get the camera booted up
-        spike = robot.visionblue.getSpike();
-        robot.visionblue.close();
-    }
 
-    */
+    /*public void doTheCvThing() {
+        robot.vision.open();
+        robot.pause(100);// hoping this is enough to get the camera booted up
+        spike = robot.vision.getSpike();
+        robot.vision.close();
+    }*/
+
+
 }

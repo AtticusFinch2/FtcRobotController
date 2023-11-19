@@ -27,7 +27,7 @@ public class AutonTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        robot = new MainRobot(hardwareMap);
+        robot = new MainRobot(hardwareMap, true);
         waitForStart();
         Trajectory strafeleft = robot.trajectoryBuilder(robot.getPoseEstimate())
                 .strafeLeft(28)

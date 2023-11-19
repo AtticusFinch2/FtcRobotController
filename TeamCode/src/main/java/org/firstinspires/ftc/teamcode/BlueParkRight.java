@@ -28,7 +28,7 @@ public class BlueParkRight extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        robot = new MainRobot(hardwareMap);
+        robot = new MainRobot(hardwareMap, true);
         waitForStart();
         robot.pause(20000);
         //doTheCvThing();

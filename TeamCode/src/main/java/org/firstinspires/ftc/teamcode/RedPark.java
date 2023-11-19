@@ -29,7 +29,7 @@ public class RedPark extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        robot = new MainRobot(hardwareMap);
+        robot = new MainRobot(hardwareMap, false);
         waitForStart();
         robot.pause(1200);
         //doTheCvThing();

@@ -29,63 +29,53 @@ public class BlueAuton1 extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        robot = new MainRobot(hardwareMap);
+        robot = new MainRobot(hardwareMap, true);
         waitForStart();
         robot.servos.Rotator.setPosition(0.24);
-        //doTheCvThing();
+        doTheCvThing();
         robot.pause(1200);
         robot.setPoseEstimate(startPose);
-        Trajectory strafe3 = robot.trajectoryBuilder(startPose)
+        Trajectory left_1 = robot.trajectoryBuilder(startPose)
                 .strafeLeft(14)
                 .build();
-        startPose = strafe3.end();
+        startPose = left_1.end();
 
-        TrajectorySequence turn3 = robot.trajectorySequenceBuilder(strafe3.end())
+        TrajectorySequence turn_1 = robot.trajectorySequenceBuilder(startPose)
                 .turn(Math.toRadians(-90))
                 .build();
-        startPose = turn3.end();
+        startPose = turn_1.end();
 
-        Trajectory firstright3 = robot.trajectoryBuilder(turn3.end())
-                .strafeLeft(14)
+        Trajectory left_2 = robot.trajectoryBuilder(startPose)
+                .strafeLeft(32)
                 .build();
-        startPose = firstright3.end();
+        startPose = left_2.end();
 
-        robot.followTrajectory(strafe3);
+        robot.followTrajectory(left_1);
         robot.pause(300);
-        robot.followTrajectorySequence(turn3);
+        robot.followTrajectorySequence(turn_1);
         robot.pause(300);
-        robot.followTrajectory(firstright3);
+        robot.followTrajectory(left_2);
         robot.pause(300);
         pixel1();
 
 
-            /**
-            if (spike == 1) {
-                Path1();
-                break;
-            } else if (spike == 2) {
-                Path2();
-                break;
-            } else if (spike == 3) {
-                Path3();
-                break;
-            }
 
-        }
+        /*if (spike == 1) {
+            Path1();
+            break;
+        } else if (spike == 2) {
+            Path2();
+            break;
+        } else if (spike == 3) {
+            Path3();
+            break;
+        }*/
 
     }
 
-     * public void doTheCvThing(){
-        robot.visionblue.open();
-        robot.pause(100);// hoping this is enough to get the camera booted up
-        spike = robot.visionblue.getSpike();
-        robot.visionblue.close();
-    }
-     */
-    }
 
-    /**
-    public void Path1() {
+
+    /*public void Path1() {
         robot.setPoseEstimate(startPose);
         Trajectory turnstrafe1 = robot.trajectoryBuilder(startPose)
                 .splineTo(new Vector2d(startPose.getX() + 5, startPose.getY()-18), Math.toRadians(-270))
@@ -134,9 +124,7 @@ public class BlueAuton1 extends LinearOpMode {
         robot.followTrajectory(firstmiddle2);
         robot.pause(300);
 
-    }
-*/
-
+    }*/
 
 
 
@@ -153,9 +141,14 @@ public class BlueAuton1 extends LinearOpMode {
         startPose = creepbackward.end();
 
         Trajectory rightpark = robot.trajectoryBuilder(startPose)
-                .strafeRight(14)
+                .strafeRight(32)
                 .build();
         startPose = rightpark.end();
+
+        Trajectory creepbackward2 = robot.trajectoryBuilder(startPose)
+                .back(6)
+                .build();
+        startPose = creepbackward2.end();
 
         robot.slides.setSlidesPower(1.0);
         robot.pause(1000);
@@ -176,15 +169,22 @@ public class BlueAuton1 extends LinearOpMode {
         robot.servos.Rotator.setPosition(0.24);
         robot.pause(300);
         robot.slides.setSlidesPower(-1.0);
-        robot.pause(1000);
+        robot.pause(1200);
+        robot.slides.setSlidesPower(0);
         robot.followTrajectory(rightpark);
         robot.pause(300);
-        robot.followTrajectory(creepbackward);
+        robot.followTrajectory(creepbackward2);
+    }
+    public void doTheCvThing(){
+        robot.vision.open();
+        robot.pause(100);// hoping this is enough to get the camera booted up
+        spike = robot.vision.getSpike();
+        robot.pause(50);
+        robot.vision.close();
+    }
 
 
-
-
-    /** brady: everything above is initial movement
+    /* brady: everything above is initial movement
      * MAKE SURE TO CALL PIXEL1 AT END OF EACH PATH
      * what needs to be done next is just universal for all paths (not much trajectory required):
      * slides go up all the way
@@ -201,6 +201,5 @@ public class BlueAuton1 extends LinearOpMode {
      * done
      */
 
-    }
 
 }

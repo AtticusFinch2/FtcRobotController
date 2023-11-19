@@ -28,7 +28,7 @@ public class Vision {
             "Box", /**THE NAME OF THE LABEL ASSIGNED TO OUR TEAM MARKER*/
     };
     private int leftBound = 400;/** variables for later classification */
-    private int rightBound = 600;
+    private int rightBound = 800;
     private List<Recognition> currentRecognitions;
     public Vision (HardwareMap hardwareMap, boolean isBlue){
         initTfod(hardwareMap, isBlue);

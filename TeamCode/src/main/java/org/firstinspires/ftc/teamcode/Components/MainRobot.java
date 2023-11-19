@@ -19,17 +19,17 @@ import org.firstinspires.ftc.teamcode.Components.Servos;
 @Config
 public class MainRobot extends SampleMecanumDrive{
 
-    public Vision visionblue;
-    public Vision visionred;
+    public Vision vision;
+    //public Vision visionred;
     public Slides slides;
     public Servos servos;
-    public MainRobot (HardwareMap hardwareMap) {
+    public MainRobot (HardwareMap hardwareMap, boolean isBlue) {
         //calls SampleMecanumDrive
         super(hardwareMap);
 
         //cv
-       // visionblue = new Vision(hardwareMap, true);
-        //visionblue.close(); // dont put strain on the cpu
+        vision = new Vision(hardwareMap, isBlue);
+        vision.close(); // dont put strain on the cpu
         //visionred = new Vision(hardwareMap, false);
         //visionred.close();
 

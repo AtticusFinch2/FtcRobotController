@@ -21,18 +21,18 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
-@Autonomous(name = "RedAuton1", group = "RedWorking")
+@Autonomous(name = "RedAuton1")
 public class RedAuton1 extends LinearOpMode {
     MainRobot robot;
     int spike;
     @Override
     public void runOpMode() {
 
-        robot = new MainRobot(hardwareMap);
+        robot = new MainRobot(hardwareMap, false);
         waitForStart();
         while (opModeIsActive()) {
             robot.pause(1200);
-            doTheCvThing();
+            //doTheCvThing();
             if (spike == 1) {
                 Path1();
                 break;
@@ -48,12 +48,12 @@ public class RedAuton1 extends LinearOpMode {
 
     }
 
-    public void doTheCvThing() {
+    /*public void doTheCvThing() {
         robot.visionred.open();
         robot.pause(100);// hoping this is enough to get the camera booted up
         spike = robot.visionred.getSpike();
         robot.visionred.close();
-    }
+    }*/
 
     public Pose2d startPose = new Pose2d(24, -70, Math.toRadians(0));
 
