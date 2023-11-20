@@ -20,7 +20,6 @@ import org.firstinspires.ftc.teamcode.Components.Servos;
 public class MainRobot extends SampleMecanumDrive{
 
     public Vision vision;
-    //public Vision visionred;
     public Slides slides;
     public Servos servos;
     public MainRobot (HardwareMap hardwareMap, boolean isBlue) {
@@ -30,8 +29,8 @@ public class MainRobot extends SampleMecanumDrive{
         //cv
         vision = new Vision(hardwareMap, isBlue);
         vision.close(); // dont put strain on the cpu
-        //visionred = new Vision(hardwareMap, false);
-        //visionred.close();
+        //tested, works
+
 
 
 
