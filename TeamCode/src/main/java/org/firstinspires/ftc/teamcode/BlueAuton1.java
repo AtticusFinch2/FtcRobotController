@@ -57,74 +57,15 @@ public class BlueAuton1 extends LinearOpMode {
         robot.followTrajectory(left_2);
         robot.pause(300);
         pixel1();
+        parkr();
 
 
 
-        /*if (spike == 1) {
-            Path1();
-            break;
-        } else if (spike == 2) {
-            Path2();
-            break;
-        } else if (spike == 3) {
-            Path3();
-            break;
-        }*/
+
 
     }
 
 
-
-    /*public void Path1() {
-        robot.setPoseEstimate(startPose);
-        Trajectory turnstrafe1 = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(startPose.getX() + 5, startPose.getY()-18), Math.toRadians(-270))
-                .build();
-        startPose = turnstrafe1.end();
-
-        Trajectory firstforward1 = robot.trajectoryBuilder(turnstrafe1.end())
-                .forward(10)
-                .build();
-        startPose = firstforward1.end();
-
-        Trajectory firstleft1 = robot.trajectoryBuilder(firstforward1.end())
-                .strafeLeft(5)
-                .build();
-        startPose = firstleft1.end();
-
-        robot.followTrajectory(turnstrafe1);
-        robot.pause(300);
-        robot.followTrajectory(firstforward1);
-        robot.pause(300);
-        robot.followTrajectory(firstleft1);
-        robot.pause(300);
-    }
-
-    public void Path2() {
-        robot.setPoseEstimate(startPose);
-        Trajectory turnstrafe2 = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(startPose.getX() + 5, startPose.getY() - 18), Math.toRadians(-270))
-                .build();
-        startPose = turnstrafe2.end();
-
-        Trajectory firstforward2 = robot.trajectoryBuilder(turnstrafe2.end())
-                .forward(10)
-                .build();
-        startPose = firstforward2.end();
-
-        Trajectory firstmiddle2 = robot.trajectoryBuilder(firstforward2.end())
-                .strafeLeft(3)
-                .build();
-        startPose = firstmiddle2.end();
-
-        robot.followTrajectory(turnstrafe2);
-        robot.pause(300);
-        robot.followTrajectory(firstforward2);
-        robot.pause(300);
-        robot.followTrajectory(firstmiddle2);
-        robot.pause(300);
-
-    }*/
 
 
 
@@ -140,15 +81,6 @@ public class BlueAuton1 extends LinearOpMode {
                 .build();
         startPose = creepbackward.end();
 
-        Trajectory rightpark = robot.trajectoryBuilder(startPose)
-                .strafeRight(32)
-                .build();
-        startPose = rightpark.end();
-
-        Trajectory creepbackward2 = robot.trajectoryBuilder(startPose)
-                .back(6)
-                .build();
-        startPose = creepbackward2.end();
 
         robot.slides.setSlidesPower(1.0);
         robot.pause(1000);
@@ -171,6 +103,17 @@ public class BlueAuton1 extends LinearOpMode {
         robot.slides.setSlidesPower(-1.0);
         robot.pause(1200);
         robot.slides.setSlidesPower(0);
+    }
+    public void parkr(){
+        Trajectory rightpark = robot.trajectoryBuilder(startPose)
+                .strafeRight(32)
+                .build();
+        startPose = rightpark.end();
+
+        Trajectory creepbackward2 = robot.trajectoryBuilder(startPose)
+                .back(6)
+                .build();
+        startPose = creepbackward2.end();
         robot.followTrajectory(rightpark);
         robot.pause(300);
         robot.followTrajectory(creepbackward2);
@@ -184,22 +127,6 @@ public class BlueAuton1 extends LinearOpMode {
     }
 
 
-    /* brady: everything above is initial movement
-     * MAKE SURE TO CALL PIXEL1 AT END OF EACH PATH
-     * what needs to be done next is just universal for all paths (not much trajectory required):
-     * slides go up all the way
-     * back metal piece goes down
-     * grabber goes to placing position
-     * creep forward till it aligns with the backboard
-     * servo latch turns
-     * pause for some time
-     * creep forward
-     * back metal piece goes back up
-     * grabber returns to neutral state
-     * slides go all the way back down
-     * creep forward if necessary to park
-     * done
-     */
 
 
 }
