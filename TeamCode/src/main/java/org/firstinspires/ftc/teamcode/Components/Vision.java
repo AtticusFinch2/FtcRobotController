@@ -17,7 +17,7 @@ import java.util.List;
  *  disregard the above statement, everything in this file works well as of 11/20/2023*/
 @Config
 public class Vision {
-    private TfodProcessor tfod;
+    public TfodProcessor tfod;
 
     private VisionPortal visionPortal;
     private static final String TFOD_MODEL_ASSET_BLUE = "blueboxdetectorcenterstage.tflite";
