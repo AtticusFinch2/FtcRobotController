@@ -74,7 +74,7 @@ public class Vision {
         // Build the Vision Portal, using the above settings.
         visionPortal = builder.build();
         // if not confident its a box, dont show it
-        tfod.setMinResultConfidence(0.70f);// -BM
+        tfod.setMinResultConfidence(0.90f);// -BM
     }
     /**
      * everything below this is -BM

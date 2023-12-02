@@ -14,6 +14,7 @@ public class Servos {
     public Servo Rotator;
     public Servo Dropper;
     public Servo Backhand;
+    public Servo Purps;
 
     public Servos (HardwareMap hardwareMap) {
         Sweep = hardwareMap.get(CRServo.class, "sweeper");
@@ -21,6 +22,7 @@ public class Servos {
         Dropper = hardwareMap.get(Servo.class, "dropper");
         Rotator = hardwareMap.get(Servo.class, "rotator");
         Backhand = hardwareMap.get(Servo.class, "backhand");
+        Purps = hardwareMap.get(Servo.class, "purps");
         Sweep.setPower(0.0);
         Plane.setPosition(0.0);
     }
