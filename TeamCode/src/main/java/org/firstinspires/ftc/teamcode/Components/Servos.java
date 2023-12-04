@@ -25,6 +25,7 @@ public class Servos {
         Purps = hardwareMap.get(Servo.class, "purps");
         Sweep.setPower(0.0);
         Plane.setPosition(0.0);
+        Purps.setPosition(0.35);
     }
 
 

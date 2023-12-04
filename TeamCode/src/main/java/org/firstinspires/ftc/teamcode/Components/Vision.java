@@ -30,8 +30,7 @@ public class Vision {
     private static final String[] LABELS = {
             "Box", /**THE NAME OF THE LABEL ASSIGNED TO OUR TEAM MARKER -BM */
     };
-    private int leftBound = 400;/** variables for later classification -BM */
-    private int rightBound = 800;
+
     private List<Recognition> currentRecognitions;
     public Vision (HardwareMap hardwareMap, boolean isBlue){
         initTfod(hardwareMap, isBlue);
@@ -74,18 +73,20 @@ public class Vision {
         // Build the Vision Portal, using the above settings.
         visionPortal = builder.build();
         // if not confident its a box, dont show it
-        tfod.setMinResultConfidence(0.90f);// -BM
+        //tfod.setMinResultConfidence(0.80f);// -BM
     }
     /**
      * everything below this is -BM
      * */
+    private int leftBound = 400;
+    private int rightBound = 800;
     public void open(){
         visionPortal.setProcessorEnabled(tfod, true);
     }
     public void close(){
         visionPortal.setProcessorEnabled(tfod,false);
     }
-    public double x1, y1, x2, y2;
+    public double x1=800, y1=0, x2=0, y2=0;
     public void findFirstBox() {
         currentRecognitions = tfod.getRecognitions();
         for (Recognition recognition : currentRecognitions) {//if you think this is jank, i dont wanna hear it
@@ -98,7 +99,7 @@ public class Vision {
     }
     public int getSpike(){ /** THIS IS HOW WE ARE CLASSIFYING THE SPIKE*/
         findFirstBox();
-        if (x2 <= leftBound){
+        if (x1 <= leftBound){
             return 1;
         } else if (x1>=rightBound) {
             return 3;
