@@ -375,10 +375,8 @@ public class CSTeleOP extends LinearOpMode {
             FR.setPower(frCurrentPower);
             BL.setPower(blCurrentPower);
             BR.setPower(brCurrentPower * 0.80);
-
             LS.setPower(lsCurrentPower);
             RS.setPower(rsCurrentPower * 0.6);
-
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
