@@ -80,6 +80,7 @@ public class BlueAuton2 extends LinearOpMode {
                 .back(38)
                 .build();
         startPose = backup.end();
+
         robot.followTrajectory(forward_1);
         robot.followTrajectory(spline_1);
         robot.servos.Purps.setPosition(0);
