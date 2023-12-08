@@ -10,11 +10,7 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 public class TeamMarkerDetection extends OpenCvPipeline {
-    /*
-    YELLOW  = Parking Left
-    CYAN    = Parking Middle
-    MAGENTA = Parking Right
-     */
+
 
     public enum ParkingPosition {
         LEFT,

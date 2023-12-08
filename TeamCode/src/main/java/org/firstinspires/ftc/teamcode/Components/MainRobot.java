@@ -32,8 +32,6 @@ public class MainRobot extends SampleMecanumDrive{
         //tested, works
 
 
-
-
         //everything else
         slides = new Slides(hardwareMap);
         servos =new Servos(hardwareMap);
