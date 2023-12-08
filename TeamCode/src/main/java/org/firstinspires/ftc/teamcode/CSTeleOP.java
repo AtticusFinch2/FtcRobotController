@@ -200,6 +200,9 @@ public class CSTeleOP extends LinearOpMode {
             y = -gamepad1.left_stick_y;
             x = gamepad1.left_stick_x;
             vert = gamepad1.left_trigger - gamepad1.right_trigger;
+            if (gamepad1.left_trigger > 0.95 && gamepad1.right_trigger > 0.95) {
+                vert = -0.15;
+            }
             telemetry.addData("dir", "xin (%.2f), yin (%.2f)", x, y);
             x = Range.clip(x, -1.0, 1.0) ; // gives values between -1 and 1, useful later
             y = Range.clip(y, -1.0, 1.0) ;
