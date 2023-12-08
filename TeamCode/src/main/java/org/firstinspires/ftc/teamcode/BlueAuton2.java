@@ -36,7 +36,7 @@ public class BlueAuton2 extends LinearOpMode {
         robot.servos.Rotator.setPosition(0.24);
         doTheCvThing();
         robot.pause(1200);
-        robot.setPoseEstimate(startPose);
+
         spike = 1; // TODO: REMOVE WHEN DONE MAKING TRAJECTORIES FOR EACH SPIKE
         switch (spike){
             case 1:
@@ -51,37 +51,39 @@ public class BlueAuton2 extends LinearOpMode {
 
     }
     public void doSpike1(){
+        robot.setPoseEstimate(startPose);
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(20)
+                .forward(5)
                 .build();
         startPose = forward_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
-                .strafeLeft(4)
+                .strafeLeft(5)
                 .build();
         startPose = left_1.end();
-        Trajectory right_1 = robot.trajectoryBuilder(startPose)
-                .strafeRight(4)
-                .build();
-        startPose = right_1.end();
-        Trajectory spline_1 = robot.trajectoryBuilder(right_1.end())
-                .splineTo(new Vector2d(startPose.getX() -10,startPose.getY()-10), Math.toRadians(0))
+        Trajectory spline_1 = robot.trajectoryBuilder(left_1.end())
+                .splineTo(new Vector2d(startPose.getX()+0,startPose.getY()+20), Math.toRadians(0))
                 .build();
         startPose = spline_1.end();
-        Trajectory backcreep = robot.trajectoryBuilder(startPose)
-                .back(4)
+        Trajectory right_1 = robot.trajectoryBuilder(startPose)
+                .strafeRight(5)
                 .build();
-        startPose = backcreep.end();
+        startPose = right_1.end();
+        Trajectory back = robot.trajectoryBuilder(startPose)
+                .back(20)
+                .build();
+        startPose = back.end();
 
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
+        robot.followTrajectory(spline_1);
         robot.servos.Purps.setPosition(0);
         robot.followTrajectory(right_1);
-        robot.followTrajectory(spline_1);
-        robot.followTrajectory(backcreep);
+        robot.followTrajectory(back);
         robot.pause(500);
     }
 
     public void doSpike2(){
+        robot.setPoseEstimate(startPose);
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
                 .forward(5)
                 .build();
@@ -102,6 +104,7 @@ public class BlueAuton2 extends LinearOpMode {
         robot.pause(500);
     }/*
     public void doSpike3(){// TODO
+        robot.setPoseEstimate(startPose);
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
                 .forward(5)
                 .build();
