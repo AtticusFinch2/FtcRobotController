@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.sun.tools.javac.Main;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -33,11 +34,11 @@ public class FINALBlueAuton extends LinearOpMode {
 
         robot = new MainRobot(hardwareMap, true);
         waitForStart();
-        robot.servos.Rotator.setPosition(0.24);
+        robot.servos.Rotator.setPosition(0.17);
         doTheCvThing();
         robot.pause(1200);
         robot.setPoseEstimate(startPose);
-        spike = 1; // TODO: REMOVE WHEN DONE MAKING TRAJECTORIES FOR EACH SPIKE
+        //spike = 1;
         switch (spike){
             case 1:
                 doSpike1();
@@ -52,7 +53,7 @@ public class FINALBlueAuton extends LinearOpMode {
     }
     public void doSpike1(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(20)
+                .forward(23)
                 .build();
         startPose = forward_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
@@ -64,7 +65,7 @@ public class FINALBlueAuton extends LinearOpMode {
                 .build();
         startPose = right_1.end();
         Trajectory spline_1 = robot.trajectoryBuilder(right_1.end())
-                .splineTo(new Vector2d(startPose.getX() -10,startPose.getY()+10), Math.toRadians(0))
+                .splineTo(new Vector2d(startPose.getX() -15,startPose.getY()-15), Math.toRadians(0))
                 .build();
         startPose = spline_1.end();
         Trajectory backcreep = robot.trajectoryBuilder(startPose)
@@ -75,6 +76,7 @@ public class FINALBlueAuton extends LinearOpMode {
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
         robot.servos.Purps.setPosition(0);
+        robot.pause(500);
         robot.followTrajectory(right_1);
         robot.followTrajectory(spline_1);
         robot.followTrajectory(backcreep);
@@ -98,6 +100,7 @@ public class FINALBlueAuton extends LinearOpMode {
         robot.followTrajectory(forward_1);
         robot.followTrajectory(spline_1);
         robot.servos.Purps.setPosition(0);
+        robot.pause(500);
         robot.followTrajectory(backup);
         robot.pause(500);
     }
@@ -106,18 +109,34 @@ public class FINALBlueAuton extends LinearOpMode {
                 .forward(5)
                 .build();
         startPose = forward_1.end();
+        Trajectory left_1 = robot.trajectoryBuilder(startPose)
+                .strafeLeft(4)
+                .build();
+        startPose = left_1.end();
         Trajectory spline_1  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(startPose.getX()+1, startPose.getY()+20), startPose.getHeading()+Math.toRadians(-90))
+                .splineTo(new Vector2d(startPose.getX()+4, startPose.getY()+20), Math.toRadians(-90))
                 .build();
         startPose = spline_1.end();
-        Trajectory spline_2  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(startPose.getX()-10, startPose.getY()+0), Math.toRadians(0))
+        Trajectory right_1 = robot.trajectoryBuilder(startPose)
+                .strafeRight(4)
                 .build();
-        startPose = spline_2.end();
+        startPose = right_1.end();
+        TrajectorySequence turn_1 = robot.trajectorySequenceBuilder(startPose)
+                .turn(Math.toRadians(-90))
+                .build();
+        startPose = turn_1.end();
+        Trajectory backup  = robot.trajectoryBuilder(startPose)
+                .back(38)
+                .build();
+        startPose = backup.end();
         robot.followTrajectory(forward_1);
+        robot.followTrajectory(left_1);
         robot.followTrajectory(spline_1);
-        robot.servos.Purps.setPosition(1);
-        robot.followTrajectory(spline_2);
+        robot.followTrajectory(right_1);
+        robot.servos.Purps.setPosition(0);
+        robot.pause(500);
+        robot.followTrajectorySequence(turn_1);
+        robot.followTrajectory(backup);
         robot.pause(500);
     }
     public void pixel1() {
@@ -134,7 +153,7 @@ public class FINALBlueAuton extends LinearOpMode {
         robot.pause(1000);
         robot.servos.Backhand.setPosition(0.5); //open
         robot.pause(1000);
-        robot.servos.Rotator.setPosition(0.48);
+        robot.servos.Rotator.setPosition(0.42);
         robot.pause(1000);
         robot.followTrajectory(creepbackward);
         robot.pause(2000);
@@ -162,14 +181,19 @@ public class FINALBlueAuton extends LinearOpMode {
                 .back(6)
                 .build();
         startPose = creepbackward2.end();
+
         robot.followTrajectory(rightpark);
         robot.pause(300);
         robot.followTrajectory(creepbackward2);
     }
+    private ElapsedTime runtime = new ElapsedTime();
     public void doTheCvThing(){
         robot.vision.open();
-        robot.pause(100);// hoping this is enough to get the camera booted up
-        spike = robot.vision.getSpike();
+        //robot.pause(2000);// hoping this is enough to get the camera booted up
+        runtime.reset();
+        while (runtime.seconds() < 4){
+            spike = robot.vision.getSpike();
+        }
         robot.pause(50);
         robot.vision.close();
     }

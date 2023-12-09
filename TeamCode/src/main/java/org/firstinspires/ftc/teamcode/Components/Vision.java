@@ -20,7 +20,7 @@ public class Vision {
     public TfodProcessor tfod;
 
     private VisionPortal visionPortal;
-    private static final String TFOD_MODEL_ASSET_BLUE = "blueboxdetectorcenterstage.tflite";
+    private static final String TFOD_MODEL_ASSET_BLUE = "BA_Model_2.tflite";
     private static final String TFOD_MODEL_ASSET_RED = "redboxdetectorcenterstage.tflite";
 
     /**           IF YOU ARE GOING TO CHANGE THE MODEL CHANGE THIS FILE NAME -BM
@@ -86,7 +86,7 @@ public class Vision {
     public void close(){
         visionPortal.setProcessorEnabled(tfod,false);
     }
-    public double x1=800, y1=0, x2=0, y2=0;
+    public double x1=600, y1=0, x2=0, y2=0;
     public void findFirstBox() {
         currentRecognitions = tfod.getRecognitions();
         for (Recognition recognition : currentRecognitions) {//if you think this is jank, i dont wanna hear it
