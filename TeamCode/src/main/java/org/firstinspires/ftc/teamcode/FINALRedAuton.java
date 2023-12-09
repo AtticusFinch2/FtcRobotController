@@ -21,13 +21,11 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
-import java.util.Vector;
-
-@Autonomous(name = "BlueAuton2")
-public class BlueAuton2 extends LinearOpMode {
+@Autonomous(name = "RA Auton")
+public class FINALRedAuton extends LinearOpMode {
     MainRobot robot;
     int spike = 2;
-    public Pose2d startPose = new Pose2d(24, 70, Math.toRadians(90));
+    public Pose2d startPose = new Pose2d(24, 70, Math.toRadians(270));
     @Override
     public void runOpMode() {
 
@@ -37,7 +35,7 @@ public class BlueAuton2 extends LinearOpMode {
         doTheCvThing();
         robot.pause(1200);
         robot.setPoseEstimate(startPose);
-        spike = 1; // TODO: REMOVE WHEN DONE MAKING TRAJECTORIES FOR EACH SPIKE
+        spike = 2; // TODO: REMOVE WHEN DONE MAKING TRAJECTORIES FOR EACH SPIKE
         switch (spike){
             case 1:
                 doSpike1();
@@ -52,6 +50,49 @@ public class BlueAuton2 extends LinearOpMode {
     }
     public void doSpike1(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
+                .forward(5)
+                .build();
+        startPose = forward_1.end();
+        Trajectory left_1 = robot.trajectoryBuilder(startPose)
+                .strafeLeft(4)
+                .build();
+        startPose = left_1.end();
+        Trajectory right_1 = robot.trajectoryBuilder(startPose)
+                .strafeRight(4)
+                .build();
+        startPose = right_1.end();
+        Trajectory spline_1  = robot.trajectoryBuilder(startPose)
+                .splineTo(new Vector2d(startPose.getX()-20, startPose.getY()+5), Math.toRadians(0))
+                .build();
+        startPose = spline_1.end();
+        robot.followTrajectory(forward_1);
+        robot.followTrajectory(right_1);
+        robot.servos.Purps.setPosition(1);
+        robot.followTrajectory(left_1);
+        robot.followTrajectory(spline_1);
+        robot.pause(500);
+    }
+    public void doSpike2(){
+        Trajectory forward_1  = robot.trajectoryBuilder(startPose)
+                .forward(5)
+                .build();
+        startPose = forward_1.end();
+        Trajectory spline_1  = robot.trajectoryBuilder(forward_1.end())
+                .splineTo(new Vector2d(startPose.getX()+5, startPose.getY()-21), Math.toRadians(0))
+                .build();
+        startPose = spline_1.end();
+        Trajectory backup  = robot.trajectoryBuilder(startPose)
+                .back(38)
+                .build();
+        startPose = backup.end();
+        robot.followTrajectory(forward_1);
+        robot.followTrajectory(spline_1);
+        robot.servos.Purps.setPosition(0);
+        robot.followTrajectory(backup);
+        robot.pause(500);
+    }
+    public void doSpike3(){
+        Trajectory forward_1  = robot.trajectoryBuilder(startPose)
                 .forward(20)
                 .build();
         startPose = forward_1.end();
@@ -64,62 +105,23 @@ public class BlueAuton2 extends LinearOpMode {
                 .build();
         startPose = right_1.end();
         Trajectory spline_1 = robot.trajectoryBuilder(right_1.end())
-                .splineTo(new Vector2d(startPose.getX() -10,startPose.getY()-10), Math.toRadians(0))
+                .splineTo(new Vector2d(startPose.getX() -10,startPose.getY()+10), Math.toRadians(0))
                 .build();
         startPose = spline_1.end();
         Trajectory backcreep = robot.trajectoryBuilder(startPose)
-                .back(4)
+                .back(10)
                 .build();
         startPose = backcreep.end();
 
         robot.followTrajectory(forward_1);
-        robot.followTrajectory(left_1);
-        robot.servos.Purps.setPosition(0);
         robot.followTrajectory(right_1);
+        robot.servos.Purps.setPosition(0);
+        robot.followTrajectory(left_1);
         robot.followTrajectory(spline_1);
         robot.followTrajectory(backcreep);
         robot.pause(500);
     }
 
-    public void doSpike2(){
-        Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(5)
-                .build();
-        startPose = forward_1.end();
-        Trajectory spline_1  = robot.trajectoryBuilder(forward_1.end())
-                .splineTo(new Vector2d(startPose.getX()+5, startPose.getY()+21), Math.toRadians(0))
-                .build();
-        startPose = spline_1.end();
-        Trajectory backup  = robot.trajectoryBuilder(startPose)
-                .back(38)
-                .build();
-        startPose = backup.end();
-
-        robot.followTrajectory(forward_1);
-        robot.followTrajectory(spline_1);
-        robot.servos.Purps.setPosition(0);
-        robot.followTrajectory(backup);
-        robot.pause(500);
-    }
-    public void doSpike3(){
-        Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(5)
-                .build();
-        startPose = forward_1.end();
-        Trajectory spline_1  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(startPose.getX()+1, startPose.getY()+20), startPose.getHeading()+Math.toRadians(-90))
-                .build();
-        startPose = spline_1.end();
-        Trajectory spline_2  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(startPose.getX()-10, startPose.getY()+0), Math.toRadians(0))
-                .build();
-        startPose = spline_2.end();
-        robot.followTrajectory(forward_1);
-        robot.followTrajectory(spline_1);
-        robot.servos.Purps.setPosition(1);
-        robot.followTrajectory(spline_2);
-        robot.pause(500);
-    }
     public void pixel1() {
         Trajectory creepbackward = robot.trajectoryBuilder(startPose)
                 .back(10)
