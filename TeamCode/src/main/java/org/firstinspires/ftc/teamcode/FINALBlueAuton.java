@@ -159,7 +159,7 @@ public class FINALBlueAuton extends LinearOpMode {
         robot.pause(2000);
         robot.servos.Dropper.setPosition(0.3);
         robot.pause(500);
-        //robot.followTrajectory(creepforward);
+        robot.followTrajectory(creepforward);
         robot.pause(1000);
         robot.servos.Dropper.setPosition(0.7);
         robot.pause(200);
