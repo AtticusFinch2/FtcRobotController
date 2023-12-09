@@ -233,11 +233,11 @@ public class CSTeleOP extends LinearOpMode {
             */
 
             if (gamepad1.dpad_up) {
-                Rotator.setPosition(0.11 + servoTrim);
+                Rotator.setPosition(0.04 + servoTrim);
             } else if (gamepad1.dpad_down) {
-                Rotator.setPosition(0.48 + servoTrim);
+                Rotator.setPosition(0.41 + servoTrim);
             } else if (gamepad1.a) {
-                Rotator.setPosition(0.24 + servoTrim);
+                Rotator.setPosition(0.17 + servoTrim);
             }
             if (gamepad1.dpad_left && runtime.seconds() - lastTrimChange > 0.15) {
                 servoTrim += 0.01;
