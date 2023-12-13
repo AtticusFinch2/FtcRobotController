@@ -105,8 +105,8 @@ public class CSTeleOP extends LinearOpMode {
     private CRServo Sweep = null;
     private Servo Plane;
     private Servo Rotator;
-    private Servo Dropper;
-    private Servo Backhand;
+    private Servo Finger;
+    private Servo Arm;
 
 
     @Override
@@ -125,9 +125,9 @@ public class CSTeleOP extends LinearOpMode {
         RS = hardwareMap.get(DcMotor.class, "starboardMotor");
         Sweep = hardwareMap.get(CRServo.class, "sweeper");
         Plane = hardwareMap.get(Servo.class, "plane");
-        Dropper = hardwareMap.get(Servo.class, "dropper");
-        Rotator = hardwareMap.get(Servo.class, "rotator");
-        Backhand = hardwareMap.get(Servo.class, "backhand");
+        Finger = hardwareMap.get(Servo.class, "finger");
+        //Rotator = hardwareMap.get(Servo.class, "rotator");
+        Arm = hardwareMap.get(Servo.class, "arm");
 
         BL.setDirection(DcMotor.Direction.FORWARD);
         FL.setDirection(DcMotor.Direction.FORWARD);
@@ -178,8 +178,8 @@ public class CSTeleOP extends LinearOpMode {
         double lastTrimChange = runtime.seconds();
         boolean sweep_on = false;
         boolean creeping = false;
-        boolean backhanding = false;
-        boolean dropping = false;
+        boolean open_arm = false;
+        boolean open_finger = false;
         double speed = 1;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
         float rx;
@@ -232,6 +232,7 @@ public class CSTeleOP extends LinearOpMode {
             }
             */
 
+            /*
             if (gamepad1.dpad_up) {
                 Rotator.setPosition(0.04 + servoTrim);
             } else if (gamepad1.dpad_down) {
@@ -239,6 +240,7 @@ public class CSTeleOP extends LinearOpMode {
             } else if (gamepad1.a) {
                 Rotator.setPosition(0.17 + servoTrim);
             }
+            */
             if (gamepad1.dpad_left && runtime.seconds() - lastTrimChange > 0.15) {
                 servoTrim += 0.01;
                 lastTrimChange = runtime.seconds();
@@ -248,22 +250,22 @@ public class CSTeleOP extends LinearOpMode {
                 lastTrimChange = runtime.seconds();
             }
             if (gamepad1.b && runtime.seconds() - lastDropChange > 0.2) {
-                dropping = !dropping;
+                open_finger = !open_finger;
                 lastDropChange = runtime.seconds();
             }
             if (gamepad1.x && runtime.seconds() - lastBackhandChange > 0.2) {
-                backhanding = !backhanding;
+                open_arm = !open_arm;
                 lastBackhandChange = runtime.seconds();
             }
-            if (!dropping) {
-                Dropper.setPosition(0.7);
+            if (open_finger) {
+                Finger.setPosition(0.7);
             } else{
-                Dropper.setPosition(0.3);
+                Finger.setPosition(1.0);
             }
-            if (backhanding) {
-                Backhand.setPosition(0.5);
+            if (open_arm) {
+                Arm.setPosition(1.0);
             } else {
-                Backhand.setPosition(0.0);
+                Arm.setPosition(0.0);
             }
 
             //do smth to drive with x and y
@@ -391,10 +393,10 @@ public class CSTeleOP extends LinearOpMode {
             telemetry.addData("rs", Double.toString(rsPWR));
             telemetry.addData("sweeper", Boolean.toString(sweep_on));
             telemetry.addData("Luancher_pos",Double.toString(Plane.getPosition()));
-            telemetry.addData("Dropper",Double.toString(Dropper.getPosition()));
-            telemetry.addData("Rotator",Double.toString(Rotator.getPosition()));
+            telemetry.addData("Finger",Double.toString(Finger.getPosition()));
+            //telemetry.addData("Rotator",Double.toString(Rotator.getPosition()));
             telemetry.addData("ServoTrim",Double.toString(servoTrim));
-            telemetry.addData("Backhand",Double.toString(Backhand.getPosition()));
+            telemetry.addData("Arm",Double.toString(Arm.getPosition()));
             telemetry.update();
         }
     }
