@@ -130,10 +130,6 @@ public class CSTeleOP extends LinearOpMode {
         Flick = hardwareMap.get(Servo.class, "flick");
         Claw = hardwareMap.get(Servo.class, "claw");
         Airplane = hardwareMap.get(Servo.class, "airplane");
-        Plane = hardwareMap.get(Servo.class, "plane");
-        Finger = hardwareMap.get(Servo.class, "finger");
-        //Rotator = hardwareMap.get(Servo.class, "rotator");
-        Arm = hardwareMap.get(Servo.class, "arm");
 
         BL.setDirection(DcMotor.Direction.FORWARD);
         FL.setDirection(DcMotor.Direction.FORWARD);
