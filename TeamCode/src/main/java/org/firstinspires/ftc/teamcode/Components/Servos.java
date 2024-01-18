@@ -10,21 +10,20 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Servos {
 
     public CRServo Sweep = null;
-    public Servo Plane;
-    public Servo Rotator;
-    public Servo Dropper;
+    public Servo Airplane;
+    public Servo Flick;
+    public Servo Claw;
     public Servo Backhand;
     public Servo Purps;
 
     public Servos (HardwareMap hardwareMap) {
         Sweep = hardwareMap.get(CRServo.class, "sweeper");
-        Plane = hardwareMap.get(Servo.class, "plane");
-        Dropper = hardwareMap.get(Servo.class, "dropper");
-        Rotator = hardwareMap.get(Servo.class, "rotator");
-        Backhand = hardwareMap.get(Servo.class, "backhand");
+        Airplane = hardwareMap.get(Servo.class, "plane");
+        Claw = hardwareMap.get(Servo.class, "dropper");
+        Flick = hardwareMap.get(Servo.class, "rotator");
         Purps = hardwareMap.get(Servo.class, "purps");
         Sweep.setPower(0.0);
-        Plane.setPosition(0.0);
+        Airplane.setPosition(0.0);
         Purps.setPosition(0.35);
     }
 
