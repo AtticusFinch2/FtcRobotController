@@ -393,10 +393,7 @@ public class CSTeleOP extends LinearOpMode {
             telemetry.addData("Airplane",Double.toString(Airplane.getPosition()));
             telemetry.addData("Claw",Double.toString(Claw.getPosition()));
             telemetry.addData("Flick",Double.toString(Flick.getPosition()));
-            telemetry.addData("Luancher_pos",Double.toString(Plane.getPosition()));
-            telemetry.addData("Finger",Double.toString(Finger.getPosition()));
-            //telemetry.addData("Rotator",Double.toString(Rotator.getPosition()));
-            telemetry.addData("Arm",Double.toString(Arm.getPosition()));
+            telemetry.addData("Luancher_pos",Double.toString(Airplane.getPosition()));
             telemetry.update();
         }
     }
