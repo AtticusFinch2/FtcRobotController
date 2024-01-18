@@ -103,16 +103,13 @@ public class CSTeleOP extends LinearOpMode {
     private DcMotor LS = null;
     private DcMotor RS = null;
     private CRServo Sweep = null;
-<<<<<<< HEAD
     private Servo Flick;
     private Servo Claw;
     private Servo Airplane;
-=======
     private Servo Plane;
     private Servo Rotator;
     private Servo Finger;
     private Servo Arm;
->>>>>>> bd34ec1cab4700f0a68dbfdf99e119855336ce66
 
 
     @Override
@@ -130,16 +127,13 @@ public class CSTeleOP extends LinearOpMode {
         LS  = hardwareMap.get(DcMotor.class, "portMotor");
         RS = hardwareMap.get(DcMotor.class, "starboardMotor");
         Sweep = hardwareMap.get(CRServo.class, "sweeper");
-<<<<<<< HEAD
         Flick = hardwareMap.get(Servo.class, "flick");
         Claw = hardwareMap.get(Servo.class, "claw");
         Airplane = hardwareMap.get(Servo.class, "airplane");
-=======
         Plane = hardwareMap.get(Servo.class, "plane");
         Finger = hardwareMap.get(Servo.class, "finger");
         //Rotator = hardwareMap.get(Servo.class, "rotator");
         Arm = hardwareMap.get(Servo.class, "arm");
->>>>>>> bd34ec1cab4700f0a68dbfdf99e119855336ce66
 
         BL.setDirection(DcMotor.Direction.FORWARD);
         FL.setDirection(DcMotor.Direction.FORWARD);
@@ -189,13 +183,10 @@ public class CSTeleOP extends LinearOpMode {
         double lastTrimChange = runtime.seconds();
         boolean sweep_on = false;
         boolean creeping = false;
-<<<<<<< HEAD
         boolean flicking = false;
         boolean dropping = false;
-=======
         boolean open_arm = false;
         boolean open_finger = false;
->>>>>>> bd34ec1cab4700f0a68dbfdf99e119855336ce66
         double speed = 1;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
         float rx;
@@ -264,7 +255,6 @@ public class CSTeleOP extends LinearOpMode {
                 open_finger = !open_finger;
                 lastDropChange = runtime.seconds();
             }
-<<<<<<< HEAD
             if (gamepad1.x && runtime.seconds() - lastFlickChange > 0.2) {
                 flicking = !flicking;
                 lastFlickChange = runtime.seconds();
@@ -278,21 +268,6 @@ public class CSTeleOP extends LinearOpMode {
                 Flick.setPosition(0.6);
             } else {
                 Flick.setPosition(0.4);
-=======
-            if (gamepad1.x && runtime.seconds() - lastBackhandChange > 0.2) {
-                open_arm = !open_arm;
-                lastBackhandChange = runtime.seconds();
-            }
-            if (open_finger) {
-                Finger.setPosition(0.7);
-            } else{
-                Finger.setPosition(1.0);
-            }
-            if (open_arm) {
-                Arm.setPosition(1.0);
-            } else {
-                Arm.setPosition(0.0);
->>>>>>> bd34ec1cab4700f0a68dbfdf99e119855336ce66
             }
 
             //do smth to drive with x and y
@@ -419,17 +394,13 @@ public class CSTeleOP extends LinearOpMode {
             telemetry.addData("ls", Double.toString(lsPWR));
             telemetry.addData("rs", Double.toString(rsPWR));
             telemetry.addData("sweeper", Boolean.toString(sweep_on));
-<<<<<<< HEAD
             telemetry.addData("Airplane",Double.toString(Airplane.getPosition()));
             telemetry.addData("Claw",Double.toString(Claw.getPosition()));
             telemetry.addData("Flick",Double.toString(Flick.getPosition()));
-=======
             telemetry.addData("Luancher_pos",Double.toString(Plane.getPosition()));
             telemetry.addData("Finger",Double.toString(Finger.getPosition()));
             //telemetry.addData("Rotator",Double.toString(Rotator.getPosition()));
-            telemetry.addData("ServoTrim",Double.toString(servoTrim));
             telemetry.addData("Arm",Double.toString(Arm.getPosition()));
->>>>>>> bd34ec1cab4700f0a68dbfdf99e119855336ce66
             telemetry.update();
         }
     }
