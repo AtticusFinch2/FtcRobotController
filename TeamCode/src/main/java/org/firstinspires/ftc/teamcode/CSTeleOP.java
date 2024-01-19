@@ -255,15 +255,15 @@ public class CSTeleOP extends LinearOpMode {
                 flicking = !flicking;
                 lastFlickChange = runtime.seconds();
             }
-            if (!dropping) {
-                Claw.setPosition(0.3);
+            if (!open_finger) {
+                Claw.setPosition(0.28);
             } else{
-                Claw.setPosition(0.5);
+                Claw.setPosition(0.4);
             }
             if (flicking) {
-                Flick.setPosition(0.6);
+                Flick.setPosition(1.0);
             } else {
-                Flick.setPosition(0.4);
+                Flick.setPosition(0.0);
             }
 
             //do smth to drive with x and y

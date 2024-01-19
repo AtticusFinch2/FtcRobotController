@@ -45,7 +45,6 @@ public class AutonTest extends LinearOpMode {
                 servoVal -= 0.01;
                 lastCreepChange = runtime.seconds();
             }
-            robot.servos.Rotator.setPosition(servoVal);
             telemetry.addData("servo", "val (%.2f)", servoVal);
             telemetry.update();
         }
