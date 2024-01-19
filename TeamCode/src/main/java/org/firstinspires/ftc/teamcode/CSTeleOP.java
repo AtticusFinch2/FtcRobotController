@@ -179,6 +179,7 @@ public class CSTeleOP extends LinearOpMode {
         double lastTrimChange = runtime.seconds();
         boolean sweep_on = false;
         boolean creeping = false;
+        boolean middle = true;
         boolean flicking = false;
         boolean dropping = false;
         boolean open_arm = false;
@@ -251,21 +252,28 @@ public class CSTeleOP extends LinearOpMode {
                 open_finger = !open_finger;
                 lastDropChange = runtime.seconds();
             }
+            if (gamepad1.a && runtime.seconds() - lastDropChange > 0.2) {
+                middle = true;
+            }
             if (gamepad1.x && runtime.seconds() - lastFlickChange > 0.2) {
                 flicking = !flicking;
+                middle = false;
                 lastFlickChange = runtime.seconds();
             }
             if (!open_finger) {
-                Claw.setPosition(0.28);
+                Claw.setPosition(0.24);
             } else{
-                Claw.setPosition(0.4);
+                Claw.setPosition(0.35);
             }
-            if (flicking) {
-                Flick.setPosition(1.0);
+            if (middle) {
+                Flick.setPosition(0.4);
             } else {
-                Flick.setPosition(0.0);
+                if (flicking) {
+                    Flick.setPosition(1.0);
+                } else {
+                    Flick.setPosition(0.0);
+                }
             }
-
             //do smth to drive with x and y
             telemetry.addData("dir", "x2 (%.2f), y2 (%.2f)", x, y);
             if (Math.abs(x)> 0.03 || Math.abs(y)>0.03) { // if input is not due to stick drift
