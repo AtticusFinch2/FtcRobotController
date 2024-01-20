@@ -263,7 +263,7 @@ public class CSTeleOP extends LinearOpMode {
                 flick_position = 2;
             }
             if (!open_finger) {
-                Claw.setPosition(0.24);
+                Claw.setPosition(0.30);
             } else{
                 Claw.setPosition(0.38);
             }

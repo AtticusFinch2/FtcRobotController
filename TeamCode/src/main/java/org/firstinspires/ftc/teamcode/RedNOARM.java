@@ -87,21 +87,16 @@ public class RedNOARM extends LinearOpMode {
                 .strafeRight(4)
                 .build();
         startPose = right_1.end();
-        TrajectorySequence turn_1 = robot.trajectorySequenceBuilder(startPose)
-                .turn(Math.toRadians(-180))
+        Trajectory forward  = robot.trajectoryBuilder(startPose)
+                .forward(38)
                 .build();
-        startPose = turn_1.end();
-        Trajectory backup  = robot.trajectoryBuilder(startPose)
-                .back(38)
-                .build();
-        startPose = backup.end();
+        startPose = forward.end();
         robot.followTrajectory(forward_1);
         robot.followTrajectory(spline_1);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
         robot.followTrajectory(right_1);
-        robot.followTrajectorySequence(turn_1);
-        robot.followTrajectory(backup);
+        robot.followTrajectory(forward);
         robot.pause(500);
     }
     public void doSpike3(){
