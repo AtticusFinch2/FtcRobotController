@@ -13,7 +13,6 @@ public class Servos {
     public Servo Airplane;
     public Servo Flick;
     public Servo Claw;
-    public Servo Backhand;
     public Servo Purps;
 
     public Servos (HardwareMap hardwareMap) {
