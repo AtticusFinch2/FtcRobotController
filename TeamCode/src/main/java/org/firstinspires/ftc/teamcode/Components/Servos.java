@@ -17,9 +17,9 @@ public class Servos {
 
     public Servos (HardwareMap hardwareMap) {
         Sweep = hardwareMap.get(CRServo.class, "sweeper");
-        Airplane = hardwareMap.get(Servo.class, "plane");
-        Claw = hardwareMap.get(Servo.class, "dropper");
-        Flick = hardwareMap.get(Servo.class, "rotator");
+        Airplane = hardwareMap.get(Servo.class, "airplane");
+        Claw = hardwareMap.get(Servo.class, "claw");
+        Flick = hardwareMap.get(Servo.class, "flick");
         Purps = hardwareMap.get(Servo.class, "purps");
         Sweep.setPower(0.0);
         Airplane.setPosition(0.0);
