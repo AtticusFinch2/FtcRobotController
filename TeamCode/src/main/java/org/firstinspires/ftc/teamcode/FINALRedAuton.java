@@ -149,9 +149,9 @@ public class FINALRedAuton extends LinearOpMode {
 
         robot.slides.setSlidesPower(1.0);
         robot.pause(1000);
-        //robot.servos.Backhand.setPosition(0.5); //open
-        robot.pause(1000);
-        //robot.servos.Rotator.setPosition(0.42);
+        robot.servos.Claw.setPosition(0.38); //close
+        robot.pause(500);
+        robot.servos.Flick.setPosition(0);
         robot.pause(1000);
         robot.followTrajectory(creepbackward);
         robot.pause(2000);
