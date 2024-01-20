@@ -177,12 +177,12 @@ public class CSTeleOP extends LinearOpMode {
         float stillModifier = 9f;
         double flPWR, frPWR, blPWR, brPWR, lsPWR, rsPWR;
         double lastTrimChange = runtime.seconds();
-        int flick_position = 0; //0: down, 1: raised, 2: middle, 3: up
+        int flick_position = 1; //0: down, 1: raised, 2: middle, 3: up
         boolean sweep_on = false;
         boolean creeping = false;
         boolean dropping = false;
         boolean open_arm = false;
-        boolean open_finger = true;
+        boolean open_finger = false;
         double speed = 1;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
         float rx;
@@ -271,7 +271,7 @@ public class CSTeleOP extends LinearOpMode {
             if (flick_position == 0) {
                 Flick.setPosition(0.0);
             } else if (flick_position == 1) {
-                Flick.setPosition(0.08);
+                Flick.setPosition(0.06);
             } else if (flick_position == 2) {
                 Flick.setPosition(0.4);
             } else if (flick_position == 3) {
