@@ -177,13 +177,12 @@ public class CSTeleOP extends LinearOpMode {
         float stillModifier = 9f;
         double flPWR, frPWR, blPWR, brPWR, lsPWR, rsPWR;
         double lastTrimChange = runtime.seconds();
+        int flick_position = 0; //0: down, 1: raised, 2: middle, 3: up
         boolean sweep_on = false;
         boolean creeping = false;
-        boolean middle = true;
-        boolean flicking = false;
         boolean dropping = false;
         boolean open_arm = false;
-        boolean open_finger = false;
+        boolean open_finger = true;
         double speed = 1;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
         float rx;
@@ -252,27 +251,31 @@ public class CSTeleOP extends LinearOpMode {
                 open_finger = !open_finger;
                 lastDropChange = runtime.seconds();
             }
-            if (gamepad1.a && runtime.seconds() - lastDropChange > 0.2) {
-                middle = true;
+            if (gamepad1.x && runtime.seconds() - lastDropChange > 0.15) {
+                flick_position = 3;
             }
-            if (gamepad1.x && runtime.seconds() - lastFlickChange > 0.2) {
-                flicking = !flicking;
-                middle = false;
-                lastFlickChange = runtime.seconds();
+            if (gamepad1.a && runtime.seconds() - lastDropChange > 0.15) {
+                flick_position = 0;
+            }
+            if (gamepad1.dpad_down && runtime.seconds() - lastDropChange > 0.15) {
+                flick_position = 1;
+            }
+            if (gamepad1.dpad_left && runtime.seconds() - lastDropChange > 0.15) {
+                flick_position = 2;
             }
             if (!open_finger) {
                 Claw.setPosition(0.24);
             } else{
-                Claw.setPosition(0.35);
+                Claw.setPosition(0.38);
             }
-            if (middle) {
+            if (flick_position == 0) {
+                Flick.setPosition(0.0);
+            } else if (flick_position == 1) {
+                Flick.setPosition(0.08);
+            } else if (flick_position == 2) {
                 Flick.setPosition(0.4);
-            } else {
-                if (flicking) {
-                    Flick.setPosition(1.0);
-                } else {
-                    Flick.setPosition(0.0);
-                }
+            } else if (flick_position == 3) {
+                Flick.setPosition(1.0);
             }
             //do smth to drive with x and y
             telemetry.addData("dir", "x2 (%.2f), y2 (%.2f)", x, y);
