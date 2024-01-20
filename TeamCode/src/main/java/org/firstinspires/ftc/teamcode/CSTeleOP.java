@@ -144,6 +144,7 @@ public class CSTeleOP extends LinearOpMode {
         RS.setPower(0);
         Sweep.setPower(0.0);
         Flick.setPosition(0.0);
+        Airplane.setPosition(0.5);
 
         FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -176,11 +177,11 @@ public class CSTeleOP extends LinearOpMode {
         double lastTrimChange = runtime.seconds();
         int flick_position = 1; //0: down, 1: raised, 2: middle, 3: up
         boolean sweep_on = false;
-        Airplane.setPosition(1.0);
+        Airplane.setPosition(0.5);
         boolean creeping = false;
         boolean dropping = false;
         boolean open_arm = false;
-        boolean open_finger = false;
+        boolean open_finger = true;
         double speed = 1;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
         float rx;
