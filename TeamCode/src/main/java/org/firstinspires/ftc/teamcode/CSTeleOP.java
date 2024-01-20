@@ -106,10 +106,7 @@ public class CSTeleOP extends LinearOpMode {
     private Servo Flick;
     private Servo Claw;
     private Servo Airplane;
-    private Servo Plane;
-    private Servo Rotator;
-    private Servo Finger;
-    private Servo Arm;
+
 
 
     @Override
@@ -179,6 +176,7 @@ public class CSTeleOP extends LinearOpMode {
         double lastTrimChange = runtime.seconds();
         int flick_position = 1; //0: down, 1: raised, 2: middle, 3: up
         boolean sweep_on = false;
+        Airplane.setPosition(1.0);
         boolean creeping = false;
         boolean dropping = false;
         boolean open_arm = false;
@@ -366,7 +364,7 @@ public class CSTeleOP extends LinearOpMode {
             }
 
             if (gamepad1.y){
-                Airplane.setPosition(1.0);
+                Airplane.setPosition(0.0);
             }
 
 
