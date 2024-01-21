@@ -17,7 +17,7 @@ public class TFODtest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        robot = new MainRobot(hardwareMap, true);
+        robot = new MainRobot(hardwareMap, false);
         waitForStart();
         doTheCvThing();
         while (opModeIsActive()) {

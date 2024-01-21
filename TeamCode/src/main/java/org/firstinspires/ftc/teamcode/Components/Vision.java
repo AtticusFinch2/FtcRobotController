@@ -79,7 +79,7 @@ public class Vision {
      * everything below this is -BM
      * */
     private int leftBound = 400;
-    private int rightBound = 800;
+    private int rightBound = 750;
     public void open(){
         visionPortal.setProcessorEnabled(tfod, true);
     }

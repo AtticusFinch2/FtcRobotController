@@ -36,16 +36,18 @@ public class RedNOARM extends LinearOpMode {
         doTheCvThing();
         robot.pause(1200);
         robot.setPoseEstimate(startPose);
-        spike = 2; // TODO: REMOVE WHEN DONE MAKING TRAJECTORIES FOR EACH SPIKE
+        //spike = 2; // TODO: REMOVE WHEN DONE MAKING TRAJECTORIES FOR EACH SPIKE
         switch (spike){
             case 1:
                 doSpike1();
+                break;
             case 2:
                 doSpike2();
+                break;
             case 3:
-                doSpike3();
+                break;
         }
-        parkr();
+        //parkr();
 
     }
     public void doSpike1(){
@@ -58,20 +60,16 @@ public class RedNOARM extends LinearOpMode {
                 .build();
         startPose = left_1.end();
         Trajectory right_1 = robot.trajectoryBuilder(startPose)
-                .strafeRight(4)
+                .strafeRight(40)
                 .build();
         startPose = right_1.end();
-        Trajectory spline_1  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(startPose.getX()-20, startPose.getY()+5), Math.toRadians(0))
-                .build();
-        startPose = spline_1.end();
 
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
-        robot.followTrajectory(right_1);
-        robot.followTrajectory(spline_1);
+        //robot.followTrajectory(right_1);
+        //robot.followTrajectory(spline_1);
         robot.pause(500);
     }
     public void doSpike2(){
@@ -95,39 +93,29 @@ public class RedNOARM extends LinearOpMode {
         robot.followTrajectory(spline_1);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
-        robot.followTrajectory(right_1);
-        robot.followTrajectory(forward);
+        //robot.followTrajectory(right_1);
+        //robot.followTrajectory(forward);
         robot.pause(500);
     }
     public void doSpike3(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(20)
+                .forward(28)
                 .build();
         startPose = forward_1.end();
         Trajectory right_1 = robot.trajectoryBuilder(startPose)
-                .strafeRight(4)
+                .strafeRight(20)
                 .build();
         startPose = right_1.end();
-        Trajectory left_1 = robot.trajectoryBuilder(startPose)
-                .strafeLeft(4)
+        Trajectory right_2 = robot.trajectoryBuilder(startPose)
+                .strafeRight(20)
                 .build();
-        startPose = left_1.end();
-        Trajectory spline_1 = robot.trajectoryBuilder(right_1.end())
-                .splineTo(new Vector2d(startPose.getX() -10,startPose.getY()+15), Math.toRadians(0))
-                .build();
-        startPose = spline_1.end();
-        Trajectory backcreep = robot.trajectoryBuilder(startPose)
-                .back(20)
-                .build();
-        startPose = backcreep.end();
+        startPose = right_2.end();
 
         robot.followTrajectory(forward_1);
         robot.followTrajectory(right_1);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
-        robot.followTrajectory(left_1);
-        robot.followTrajectory(spline_1);
-        robot.followTrajectory(backcreep);
+        robot.followTrajectory(right_2);
         robot.pause(500);
     }
 
@@ -141,9 +129,9 @@ public class RedNOARM extends LinearOpMode {
                 .back(6)
                 .build();
         startPose = creepbackward2.end();
-        robot.followTrajectory(rightpark);
+        //robot.followTrajectory(rightpark);
         robot.pause(300);
-        robot.followTrajectory(creepbackward2);
+        //robot.followTrajectory(creepbackward2);
     }
     private ElapsedTime runtime = new ElapsedTime();
     public void doTheCvThing(){

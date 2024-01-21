@@ -263,7 +263,7 @@ public class CSTeleOP extends LinearOpMode {
                 flick_position = 2;
             }
             if (!open_finger) {
-                Claw.setPosition(0.30);
+                Claw.setPosition(0.28);
             } else{
                 Claw.setPosition(0.38);
             }
@@ -352,7 +352,7 @@ public class CSTeleOP extends LinearOpMode {
                 sweep_on = true;
             }
 
-            if (gamepad1.left_stick_button && runtime.seconds() - lastCreepChange > 0.1) {
+            if (gamepad1.right_stick_button && runtime.seconds() - lastCreepChange > 0.1) {
                 creeping = !creeping;
                 lastCreepChange = runtime.seconds();
             }

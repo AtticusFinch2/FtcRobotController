@@ -40,49 +40,52 @@ public class BlueNOARM extends LinearOpMode {
         switch (spike){
             case 1:
                 doSpike1();
+                break;
             case 2:
                 doSpike2();
+                break;
             case 3:
                 doSpike3();
+                break;
         }
-        parkr();
+        //parkr();
 
     }
     public void doSpike1(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(23)
+                .forward(28)
                 .build();
         startPose = forward_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
-                .strafeLeft(4)
+                .strafeLeft(3)
                 .build();
         startPose = left_1.end();
         Trajectory right_1 = robot.trajectoryBuilder(startPose)
-                .strafeRight(4)
+                .strafeRight(3)
                 .build();
         startPose = right_1.end();
-        Trajectory spline_1 = robot.trajectoryBuilder(right_1.end())
-                .splineTo(new Vector2d(startPose.getX() -15,startPose.getY()-15), Math.toRadians(0))
+        Trajectory forward_2 = robot.trajectoryBuilder(startPose)
+                .forward(18)
                 .build();
-        startPose = spline_1.end();
-        Trajectory backcreep = robot.trajectoryBuilder(startPose)
-                .back(10)
+        startPose = forward_2.end();
+        Trajectory left_2 = robot.trajectoryBuilder(startPose)
+                .strafeLeft(38)
                 .build();
-        startPose = backcreep.end();
+        startPose = left_2.end();
 
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
         robot.followTrajectory(right_1);
-        robot.followTrajectory(spline_1);
-        robot.followTrajectory(backcreep);
+        robot.followTrajectory(forward_2);
+        robot.followTrajectory(left_2);
         robot.pause(500);
     }
 
     public void doSpike2(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(5)
+                .forward(7)
                 .build();
         startPose = forward_1.end();
         Trajectory spline_1  = robot.trajectoryBuilder(forward_1.end())
@@ -114,30 +117,25 @@ public class BlueNOARM extends LinearOpMode {
                 .splineTo(new Vector2d(startPose.getX()+4, startPose.getY()+20), Math.toRadians(-90))
                 .build();
         startPose = spline_1.end();
-        Trajectory right_1 = robot.trajectoryBuilder(startPose)
-                .strafeRight(4)
+        Trajectory left_2 = robot.trajectoryBuilder(startPose)
+                .strafeLeft(5)
+                .build();
+        startPose = left_2.end();
+        Trajectory right_1  = robot.trajectoryBuilder(startPose)
+                .strafeRight(40)
                 .build();
         startPose = right_1.end();
-        TrajectorySequence turn_1 = robot.trajectorySequenceBuilder(startPose)
-                .turn(Math.toRadians(-90))
-                .build();
-        startPose = turn_1.end();
-        Trajectory backup  = robot.trajectoryBuilder(startPose)
-                .back(38)
-                .build();
-        startPose = backup.end();
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
         robot.followTrajectory(spline_1);
-        robot.followTrajectory(right_1);
+        robot.followTrajectory(left_2);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
-        robot.followTrajectorySequence(turn_1);
-        robot.followTrajectory(backup);
+        robot.followTrajectory(right_1);
         robot.pause(500);
     }
 
-    public void parkr(){
+    /*public void parkr(){
         Trajectory rightpark = robot.trajectoryBuilder(startPose)
                 .strafeRight(32)
                 .build();
@@ -151,7 +149,7 @@ public class BlueNOARM extends LinearOpMode {
         robot.followTrajectory(rightpark);
         robot.pause(300);
         robot.followTrajectory(creepbackward2);
-    }
+    }*/
     private ElapsedTime runtime = new ElapsedTime();
     public void doTheCvThing(){
         robot.vision.open();
