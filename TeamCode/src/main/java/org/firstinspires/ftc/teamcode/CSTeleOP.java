@@ -352,6 +352,17 @@ public class CSTeleOP extends LinearOpMode {
                 sweep_on = true;
             }
 
+            if (gamepad2.right_bumper && gamepad2.left_bumper || !gamepad2.right_bumper && !gamepad2.left_bumper) {
+                Sweep.setPower(0.0);
+                sweep_on = false;
+            } else if (gamepad2.right_bumper) {
+                Sweep.setPower(1.0);
+                sweep_on = true;
+            } else if (gamepad2.left_bumper) {
+                Sweep.setPower(-1.0);
+                sweep_on = true;
+            }
+
             if (gamepad1.right_stick_button && runtime.seconds() - lastCreepChange > 0.1) {
                 creeping = !creeping;
                 lastCreepChange = runtime.seconds();
