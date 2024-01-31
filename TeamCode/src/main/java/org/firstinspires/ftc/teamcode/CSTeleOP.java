@@ -191,6 +191,7 @@ public class CSTeleOP extends LinearOpMode {
         boolean dropping = false;
         boolean open_arm = false;
         boolean open_finger = true;
+        int placeholder = 0;
         double speed = 1;//this affects how touchy the stick is to input;
         //             still goes to full power regardless
         float rx;
@@ -408,7 +409,19 @@ public class CSTeleOP extends LinearOpMode {
             LS.setPower(lsCurrentPower);
             RS.setPower(rsCurrentPower * 0.6);
 
-            blinkFromPixels(numOfPixelsInGuide());
+
+
+            placeholder = numOfPixelsInGuide();
+            if ((LeftColor.getDistance(DistanceUnit.CM) < 3) && (RightColor.getDistance(DistanceUnit.CM) < 15)) {
+                ledDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED_ORANGE);
+            } else if (LeftColor.getDistance(DistanceUnit.CM) < 3){
+                ledDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.VIOLET);
+            } else if (RightColor.getDistance(DistanceUnit.CM) < 15){
+                ledDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE_GREEN);
+            } else {
+                ledDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.DARK_GREEN);
+            }
+
 
 
             // Show the elapsed game time and wheel power.
@@ -426,29 +439,20 @@ public class CSTeleOP extends LinearOpMode {
             telemetry.addData("Flick",Double.toString(Flick.getPosition()));
             telemetry.addData("DistL",LeftColor.getDistance(DistanceUnit.CM));
             telemetry.addData("DistR",RightColor.getDistance(DistanceUnit.CM));
+            telemetry.addData("# of pixels in the guides",placeholder);
             telemetry.addData("Luancher_pos",Double.toString(Airplane.getPosition()));
             telemetry.update();
         }
     }
     public int numOfPixelsInGuide(){
         int a = 0;
-        if (LeftColor.getDistance(DistanceUnit.CM) < 2) {
+        if (LeftColor.getDistance(DistanceUnit.CM) < 3) { // left one is a v3 so its more accurate
             a++;
         }
-        if (RightColor.getDistance(DistanceUnit.CM) < 2) {
+        if (RightColor.getDistance(DistanceUnit.CM) < 15) { // right is the v2 from last year so it sucks
             a++;
         }
         return a;
-    }
-    public void blinkFromPixels(int n){
-        switch (n){
-            case 0:
-                ledDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED_ORANGE);
-            case 1:
-                ledDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE_GREEN);
-            case 2:
-                ledDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.VIOLET);
-        }
     }
 }
 
