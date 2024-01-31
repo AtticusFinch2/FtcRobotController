@@ -29,17 +29,22 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Components.Lighting;
 
 class CSbot{ // WE R NOT USING THIS IN TELEOP; This is so that autonomous modes can reference
     // Declare OpMode members.
@@ -104,19 +109,18 @@ public class CSTeleOP extends LinearOpMode {
     private DcMotor RS = null;
     private CRServo Sweep = null;
     private Servo Flick;
-    private Servo Claw;
+    private Servo ClawL;
+    private Servo ClawR;
     private Servo Airplane;
-
-
+    private DistanceSensor LeftColor, RightColor;
+    private RevBlinkinLedDriver ledDriver;
 
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        // Initialize the hardware variables. Note that the strings used here as parameters
-        // to 'get' must correspond to the names assigned during the robot configuration
-        // step (using the FTC Robot Controller app on the phone).
+
         BL  = hardwareMap.get(DcMotor.class, "bl");
         BR = hardwareMap.get(DcMotor.class, "br");
         FL  = hardwareMap.get(DcMotor.class, "fl");
@@ -125,8 +129,13 @@ public class CSTeleOP extends LinearOpMode {
         RS = hardwareMap.get(DcMotor.class, "starboardMotor");
         Sweep = hardwareMap.get(CRServo.class, "sweeper");
         Flick = hardwareMap.get(Servo.class, "flick");
-        Claw = hardwareMap.get(Servo.class, "claw");
+        ClawL = hardwareMap.get(Servo.class, "clawl");
+        ClawR = hardwareMap.get(Servo.class, "clawr");
         Airplane = hardwareMap.get(Servo.class, "airplane");
+        LeftColor = hardwareMap.get(DistanceSensor.class, "LeftColor");
+        RightColor = hardwareMap.get(DistanceSensor.class, "RightColor");
+        ledDriver = hardwareMap.get(RevBlinkinLedDriver.class, "rgb");
+
 
         BL.setDirection(DcMotor.Direction.FORWARD);
         FL.setDirection(DcMotor.Direction.FORWARD);
@@ -262,10 +271,12 @@ public class CSTeleOP extends LinearOpMode {
             if (gamepad1.dpad_left && runtime.seconds() - lastDropChange > 0.15) {
                 flick_position = 2;
             }
-            if (!open_finger) {
-                Claw.setPosition(0.28);
-            } else{
-                Claw.setPosition(0.38);
+            if (!open_finger) { //open
+                ClawL.setPosition(0.5);
+                ClawR.setPosition(0.6);
+            } else{ //closed
+                ClawL.setPosition(0.9);
+                ClawR.setPosition(0.1);
             }
             if (flick_position == 0) {
                 Flick.setPosition(0.0);
@@ -402,6 +413,9 @@ public class CSTeleOP extends LinearOpMode {
             LS.setPower(lsCurrentPower);
             RS.setPower(rsCurrentPower * 0.6);
 
+            blinkFromPixels(numOfPixelsInGuide());
+
+
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("fl", Double.toString(flPWR));
@@ -412,10 +426,33 @@ public class CSTeleOP extends LinearOpMode {
             telemetry.addData("rs", Double.toString(rsPWR));
             telemetry.addData("sweeper", Boolean.toString(sweep_on));
             telemetry.addData("Airplane",Double.toString(Airplane.getPosition()));
-            telemetry.addData("Claw",Double.toString(Claw.getPosition()));
+            telemetry.addData("ClawL",Double.toString(ClawL.getPosition()));
+            telemetry.addData("ClawR",Double.toString(ClawR.getPosition()));
             telemetry.addData("Flick",Double.toString(Flick.getPosition()));
+            telemetry.addData("DistL",LeftColor.getDistance(DistanceUnit.CM));
+            telemetry.addData("DistR",RightColor.getDistance(DistanceUnit.CM));
             telemetry.addData("Luancher_pos",Double.toString(Airplane.getPosition()));
             telemetry.update();
+        }
+    }
+    public int numOfPixelsInGuide(){
+        int a = 0;
+        if (LeftColor.getDistance(DistanceUnit.CM) < 2) {
+            a++;
+        }
+        if (RightColor.getDistance(DistanceUnit.CM) < 2) {
+            a++;
+        }
+        return a;
+    }
+    public void blinkFromPixels(int n){
+        switch (n){
+            case 0:
+                ledDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED_ORANGE);
+            case 1:
+                ledDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLUE_GREEN);
+            case 2:
+                ledDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.VIOLET);
         }
     }
 }
