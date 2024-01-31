@@ -176,7 +176,7 @@ public class CSTeleOP extends LinearOpMode {
         double brCurrentPower = 0;
         double lsCurrentPower = 0;
         double rsCurrentPower = 0;
-        double tractionModifier = 0.02;
+        double tractionModifier = 0.05;
         double slideTractionModifier = 0.02;
         double lastCreepChange = runtime.seconds();
         double lastDropChange = runtime.seconds();
@@ -250,12 +250,6 @@ public class CSTeleOP extends LinearOpMode {
             } else if (gamepad1.a) {
             }
             */
-            if (gamepad1.dpad_left && runtime.seconds() - lastTrimChange > 0.15) {
-                lastTrimChange = runtime.seconds();
-            }
-            if (gamepad1.dpad_right && runtime.seconds() - lastTrimChange > 0.15) {
-                lastTrimChange = runtime.seconds();
-            }
             if (gamepad1.b && runtime.seconds() - lastDropChange > 0.2) {
                 open_finger = !open_finger;
                 lastDropChange = runtime.seconds();
@@ -274,14 +268,14 @@ public class CSTeleOP extends LinearOpMode {
                 ClawR.setPosition(0.6);
             } else{ //closed
                 ClawL.setPosition(0.9);
-                ClawR.setPosition(0.2);
+                ClawR.setPosition(0.1);
             }
             if (flick_position == 0) {
-                Flick.setPosition(0.5);
+                Flick.setPosition(0.81);
             } else if (flick_position == 1) {
-                Flick.setPosition(0.44);
+                Flick.setPosition(0.76);
             } else if (flick_position == 2) {
-                Flick.setPosition(0.1);
+                Flick.setPosition(0.4);
             }
             //do smth to drive with x and y
             telemetry.addData("dir", "x2 (%.2f), y2 (%.2f)", x, y);
