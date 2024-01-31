@@ -432,10 +432,10 @@ public class CSTeleOP extends LinearOpMode {
     }
     public int numOfPixelsInGuide(){
         int a = 0;
-        if (LeftColor.getDistance(DistanceUnit.CM) < 2) {
+        if (LeftColor.getDistance(DistanceUnit.CM) < 3) { // left one is a v3 so its more accurate
             a++;
         }
-        if (RightColor.getDistance(DistanceUnit.CM) < 2) {
+        if (RightColor.getDistance(DistanceUnit.CM) < 20) { // right is the v2 from last year so it sucks
             a++;
         }
         return a;
