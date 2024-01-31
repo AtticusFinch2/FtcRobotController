@@ -259,33 +259,28 @@ public class CSTeleOP extends LinearOpMode {
                 open_finger = !open_finger;
                 lastDropChange = runtime.seconds();
             }
-            if (gamepad1.x && runtime.seconds() - lastDropChange > 0.15) {
-                flick_position = 3;
-            }
-            if (gamepad1.a && runtime.seconds() - lastDropChange > 0.15) {
+            if (gamepad1.dpad_left && runtime.seconds() - lastDropChange > 0.15) {
                 flick_position = 0;
             }
             if (gamepad1.dpad_down && runtime.seconds() - lastDropChange > 0.15) {
                 flick_position = 1;
             }
-            if (gamepad1.dpad_left && runtime.seconds() - lastDropChange > 0.15) {
+            if (gamepad1.dpad_right && runtime.seconds() - lastDropChange > 0.15) {
                 flick_position = 2;
             }
             if (!open_finger) { //open
                 ClawL.setPosition(0.5);
                 ClawR.setPosition(0.6);
             } else{ //closed
-                ClawL.setPosition(0.9);
-                ClawR.setPosition(0.1);
+                ClawL.setPosition(0.1);
+                ClawR.setPosition(1.0);
             }
             if (flick_position == 0) {
-                Flick.setPosition(0.0);
+                Flick.setPosition(1.00);
             } else if (flick_position == 1) {
-                Flick.setPosition(0.06);
+                Flick.setPosition(0.97);
             } else if (flick_position == 2) {
-                Flick.setPosition(0.4);
-            } else if (flick_position == 3) {
-                Flick.setPosition(1.0);
+                Flick.setPosition(0.6);
             }
             //do smth to drive with x and y
             telemetry.addData("dir", "x2 (%.2f), y2 (%.2f)", x, y);
@@ -374,7 +369,7 @@ public class CSTeleOP extends LinearOpMode {
                 sweep_on = true;
             }
 
-            if (gamepad1.right_stick_button && runtime.seconds() - lastCreepChange > 0.1) {
+            if (gamepad1.dpad_up && runtime.seconds() - lastCreepChange > 0.1) {
                 creeping = !creeping;
                 lastCreepChange = runtime.seconds();
             }
