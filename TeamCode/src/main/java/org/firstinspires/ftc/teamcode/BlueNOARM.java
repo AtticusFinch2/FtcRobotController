@@ -36,7 +36,7 @@ public class BlueNOARM extends LinearOpMode {
         doTheCvThing();
         robot.pause(1200);
         robot.setPoseEstimate(startPose);
-        //spike = 1;
+        //spike = 3;
         switch (spike){
             case 1:
                 doSpike1();

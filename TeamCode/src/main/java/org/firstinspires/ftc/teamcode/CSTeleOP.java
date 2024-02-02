@@ -46,54 +46,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Components.Lighting;
 
-class CSbot{ // WE R NOT USING THIS IN TELEOP; This is so that autonomous modes can reference
-    // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor FL = null;
-    private DcMotor FR = null;
-    private DcMotor BL = null;
-    private DcMotor BR = null;
-    private DcMotor LS = null;
-    private DcMotor RS = null;
-    private CRServo Sweep = null;
-    private Servo Plane;
-    HardwareMap map = null;
-    public void init(HardwareMap maps){
-        map = maps;
-        BL  = maps.get(DcMotor.class, "bl");
-        BR = maps.get(DcMotor.class, "br");
-        FL  = maps.get(DcMotor.class, "fl");
-        FR = maps.get(DcMotor.class, "fr");
-        LS  = maps.get(DcMotor.class, "portMotor");
-        RS = maps.get(DcMotor.class, "starboardMotor");
-        Sweep = maps.get(CRServo.class, "sweeper");
-        Plane = maps.get(Servo.class, "plane");
 
-        BL.setDirection(DcMotor.Direction.FORWARD);
-        FL.setDirection(DcMotor.Direction.FORWARD);
-        BR.setDirection(DcMotor.Direction.REVERSE);
-        FR.setDirection(DcMotor.Direction.REVERSE);
-        LS.setDirection(DcMotor.Direction.REVERSE);
-        RS.setDirection(DcMotor.Direction.FORWARD);
-
-
-        FL.setPower(0);
-        FR.setPower(0);
-        BL.setPower(0);
-        BR.setPower(0);
-        LS.setPower(0);
-        RS.setPower(0);
-        Sweep.setPower(1.0);
-        Plane.setPosition(0.0);
-
-        FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        LS.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        RS.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-    }
-}
 
 @TeleOp(name="CSTeleOP1", group="Linear OpMode")
 //@Disabled THIS DISABLES THE OP MODE, LEAVE IT COMMENTED
@@ -152,7 +105,7 @@ public class CSTeleOP extends LinearOpMode {
         LS.setPower(0);
         RS.setPower(0);
         Sweep.setPower(0.0);
-        Flick.setPosition(0.0);
+        Flick.setPosition(0.81);
         Airplane.setPosition(0.5);
 
         FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
