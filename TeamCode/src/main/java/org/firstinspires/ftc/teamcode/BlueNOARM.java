@@ -39,12 +39,15 @@ public class BlueNOARM extends LinearOpMode {
         //spike = 3;
         switch (spike){
             case 1:
+                robot.lighting.blinkMagenta();
                 doSpike1();
                 break;
             case 2:
+                robot.lighting.blinkCyan();
                 doSpike2();
                 break;
             case 3:
+                robot.lighting.blinkGreen();
                 doSpike3();
                 break;
         }
@@ -65,13 +68,13 @@ public class BlueNOARM extends LinearOpMode {
                 .build();
         startPose = right_1.end();
         Trajectory forward_2 = robot.trajectoryBuilder(startPose)
-                .forward(18)
+                .forward(19)
                 .build();
         startPose = forward_2.end();
-        Trajectory left_2 = robot.trajectoryBuilder(startPose)
+        Trajectory left_3 = robot.trajectoryBuilder(startPose)
                 .strafeLeft(38)
                 .build();
-        startPose = left_2.end();
+        startPose = left_3.end();
 
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
@@ -79,7 +82,7 @@ public class BlueNOARM extends LinearOpMode {
         robot.pause(500);
         robot.followTrajectory(right_1);
         robot.followTrajectory(forward_2);
-        robot.followTrajectory(left_2);
+        robot.followTrajectory(left_3);
         robot.pause(500);
     }
 
