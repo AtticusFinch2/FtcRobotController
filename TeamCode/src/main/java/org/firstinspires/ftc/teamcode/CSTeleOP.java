@@ -211,7 +211,7 @@ public class CSTeleOP extends LinearOpMode {
             //This uses basic math to combine motions and is easier to drive straight.
             y = -gamepad1.left_stick_y;
             x = gamepad1.left_stick_x;
-            vert = gamepad1.left_trigger - gamepad1.right_trigger;
+            vert = gamepad1.left_trigger - gamepad1.right_trigger - gamepad2.right_trigger + gamepad2.left_trigger;
             if (gamepad1.left_trigger > 0.95 && gamepad1.right_trigger > 0.95) {
                 vert = -0.15;
             }
@@ -254,13 +254,13 @@ public class CSTeleOP extends LinearOpMode {
                 open_finger = !open_finger;
                 lastDropChange = runtime.seconds();
             }
-            if (gamepad1.dpad_left && runtime.seconds() - lastDropChange > 0.15) {
+            if ((gamepad1.dpad_left || gamepad2.dpad_left) && runtime.seconds() - lastDropChange > 0.15) {
                 flick_position = 0;
             }
-            if (gamepad1.dpad_down && runtime.seconds() - lastDropChange > 0.15) {
+            if ((gamepad1.dpad_down || gamepad2.dpad_down) && runtime.seconds() - lastDropChange > 0.15) {
                 flick_position = 1;
             }
-            if (gamepad1.dpad_right && runtime.seconds() - lastDropChange > 0.15) {
+            if ((gamepad1.dpad_right || gamepad2.dpad_right) && runtime.seconds() - lastDropChange > 0.15) {
                 flick_position = 2;
             }
             if (!open_finger) { //open
@@ -342,13 +342,13 @@ public class CSTeleOP extends LinearOpMode {
             rsPWR = Range.clip(rsPWR, -1.0, 1.0) ;
             // Send calculated power to wheels
 
-            if (gamepad1.right_bumper && gamepad1.left_bumper || !gamepad1.right_bumper && !gamepad1.left_bumper) {
+            if ((gamepad1.right_bumper || gamepad2.right_bumper) && (gamepad1.left_bumper || gamepad2.left_bumper) || !(gamepad1.right_bumper || gamepad2.right_bumper) && !(gamepad1.left_bumper || gamepad2.left_bumper)) {
                 Sweep.setPower(0.0);
                 sweep_on = false;
-            } else if (gamepad1.right_bumper) {
+            } else if (gamepad1.right_bumper || gamepad2.right_bumper) {
                 Sweep.setPower(1.0);
                 sweep_on = true;
-            } else if (gamepad1.left_bumper) {
+            } else if (gamepad1.left_bumper || gamepad2.left_bumper) {
                 Sweep.setPower(-1.0);
                 sweep_on = true;
             }
@@ -364,7 +364,7 @@ public class CSTeleOP extends LinearOpMode {
                 sweep_on = true;
             }
             */
-            if (gamepad1.dpad_up && runtime.seconds() - lastCreepChange > 0.1) {
+            if ((gamepad1.dpad_up || gamepad2.dpad_up) && runtime.seconds() - lastCreepChange > 0.1) {
                 creeping = !creeping;
                 lastCreepChange = runtime.seconds();
             }
