@@ -22,6 +22,8 @@ public class MainRobot extends SampleMecanumDrive{
     public Vision vision;
     public Slides slides;
     public Servos servos;
+
+    public Lighting lighting;
     public MainRobot (HardwareMap hardwareMap, boolean isBlue) {
         //calls SampleMecanumDrive
         super(hardwareMap);
@@ -35,6 +37,7 @@ public class MainRobot extends SampleMecanumDrive{
         //everything else
         slides = new Slides(hardwareMap);
         servos =new Servos(hardwareMap);
+        lighting =  new Lighting(hardwareMap);
     }
 
     public void pause(long time) { //time in ms
