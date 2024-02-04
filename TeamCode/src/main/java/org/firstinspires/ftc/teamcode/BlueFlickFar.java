@@ -64,7 +64,7 @@ public class BlueFlickFar extends LinearOpMode {
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
         robot.followTrajectory(right_1);
-        robot.followTrajectory(forward_2);
+        //robot.followTrajectory(forward_2);
         robot.pause(500);
     }
     public void doSpike2(){
@@ -99,8 +99,8 @@ public class BlueFlickFar extends LinearOpMode {
         robot.pause(500);
         robot.followTrajectory(right_2);
         robot.pause(500);
-        robot.followTrajectory(forward);
-        robot.followTrajectory(left_1);
+        //robot.followTrajectory(forward);
+        //robot.followTrajectory(left_1);
     }
     public void doSpike3(){
         Trajectory spline_1  = robot.trajectoryBuilder(startPose)
@@ -116,7 +116,7 @@ public class BlueFlickFar extends LinearOpMode {
                 .build();
         startPose = right_2.end();
         Trajectory back_2 = robot.trajectoryBuilder(startPose)
-                .back(16)
+                .back(14)
                 .build();
         startPose = back_2.end();
         Trajectory left_2 = robot.trajectoryBuilder(startPose)
