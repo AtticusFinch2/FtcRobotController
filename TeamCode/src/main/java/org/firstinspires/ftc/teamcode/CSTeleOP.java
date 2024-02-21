@@ -197,12 +197,7 @@ public class CSTeleOP extends LinearOpMode {
             }
             */
 
-            /*
-            if (gamepad1.dpad_up) {
-            } else if (gamepad1.dpad_down) {
-            } else if (gamepad1.a) {
-            }
-            */
+
             if (gamepad1.b && runtime.seconds() - lastDropChange > 0.2) {
                 open_finger = !open_finger;
                 lastDropChange = runtime.seconds();
@@ -343,7 +338,10 @@ public class CSTeleOP extends LinearOpMode {
             blCurrentPower = Range.clip(blCurrentPower,-1,1);
             brCurrentPower = Range.clip(brCurrentPower,-1,1);
 
-
+            if (gamepad1.a) {
+                lsPWR = 0.4;
+                rsPWR = 0.4;
+            }
             lsCurrentPower -= Range.clip(lsCurrentPower - lsPWR,-slideTractionModifier,slideTractionModifier);
             rsCurrentPower -= Range.clip(rsCurrentPower - rsPWR,-slideTractionModifier,slideTractionModifier);
             lsCurrentPower = Range.clip(lsCurrentPower,-1,1);
