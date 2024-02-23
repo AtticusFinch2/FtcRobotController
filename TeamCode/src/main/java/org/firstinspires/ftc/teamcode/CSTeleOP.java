@@ -105,7 +105,7 @@ public class CSTeleOP extends LinearOpMode {
         LS.setPower(0);
         RS.setPower(0);
         Sweep.setPower(0.0);
-        Flick.setPosition(0.81);
+        Flick.setPosition(0.27);
         Airplane.setPosition(0.5);
 
         FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -203,13 +203,13 @@ public class CSTeleOP extends LinearOpMode {
                 lastDropChange = runtime.seconds();
             }
             if ((gamepad1.dpad_left || gamepad2.dpad_left) && runtime.seconds() - lastDropChange > 0.15) {
-                flick_position = 0;
+                flick_position = 0; // farthest back
             }
             if ((gamepad1.dpad_down || gamepad2.dpad_down) && runtime.seconds() - lastDropChange > 0.15) {
-                flick_position = 1;
+                flick_position = 1; // in the guides
             }
             if ((gamepad1.dpad_right || gamepad2.dpad_right) && runtime.seconds() - lastDropChange > 0.15) {
-                flick_position = 2;
+                flick_position = 2; // highest up
             }
             if (!open_finger) { //open
                 ClawL.setPosition(0.5);
@@ -218,12 +218,13 @@ public class CSTeleOP extends LinearOpMode {
                 ClawL.setPosition(0.9);
                 ClawR.setPosition(0.1);
             }
+
             if (flick_position == 0) {
-                Flick.setPosition(0.81);
+                Flick.setPosition(0);
             } else if (flick_position == 1) {
-                Flick.setPosition(0.76);
+                Flick.setPosition(0.27);
             } else if (flick_position == 2) {
-                Flick.setPosition(0.4);
+                Flick.setPosition(0.37);
             }
             //do smth to drive with x and y
             telemetry.addData("dir", "x2 (%.2f), y2 (%.2f)", x, y);
