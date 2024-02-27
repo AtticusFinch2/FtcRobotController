@@ -28,6 +28,15 @@ public class Servos {
         Purps.setPosition(0.35);
     }
 
+    public void openClaw() {
+        ClawL.setPosition(0.5);
+        ClawR.setPosition(0.7);
+    }
+
+    public void closeClaw() {
+        ClawL.setPosition(0.1);
+        ClawR.setPosition(1.0);
+    }
 
 
 }

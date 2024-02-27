@@ -38,6 +38,7 @@ public class BlueFlickClose extends LinearOpMode {
                 doSpike3();
                 break;
         }
+        //pixel1(); //FIXME uncomment when confirm pixel1 works
         //parkr();
 
     }
@@ -121,7 +122,7 @@ public class BlueFlickClose extends LinearOpMode {
         robot.followTrajectory(left_2);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
-        robot.followTrajectory(right_1);
+        robot.followTrajectory(right_1); //FIXME will have to get rid of this when running pixel1
         robot.pause(500);
     }
 
@@ -140,6 +141,36 @@ public class BlueFlickClose extends LinearOpMode {
         robot.pause(300);
         robot.followTrajectory(creepbackward2);
     }*/
+    public void pixel1(){
+        Trajectory creepbackward = robot.trajectoryBuilder(startPose)
+                .back(10)
+                .build();
+        startPose = creepbackward.end();
+        Trajectory creepbackward2 = robot.trajectoryBuilder(startPose)
+                .back(3)
+                .build();
+        startPose = creepbackward2.end();
+
+        robot.followTrajectory(creepbackward);
+        robot.pause(200);
+        robot.servos.Flick.setPosition(0.5); //FIXME input position from teleop code (bring up)
+        robot.pause(200);
+        robot.slides.setSlidesPower(1.0);
+        robot.pause(1500);
+        robot.servos.Flick.setPosition(0); //FIXME input position from teleop code (scoring)
+        robot.pause(200);
+        robot.followTrajectory(creepbackward2);
+        robot.servos.openClaw();
+        robot.pause(200);
+        robot.servos.closeClaw();
+        robot.pause(200);
+        robot.servos.Flick.setPosition(0.5); //FIXME input position from teleop code (bring back up)
+        robot.slides.setSlidesPower(-1.0);
+        robot.pause(1000);
+        //FIXME based on testing (should end up in back scoreboard section)
+
+    }
+
     private ElapsedTime runtime = new ElapsedTime();
     public void doTheCvThing(){
         robot.vision.open();
