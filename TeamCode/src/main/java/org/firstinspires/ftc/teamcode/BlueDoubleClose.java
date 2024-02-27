@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Components.MainRobot;
 
-@Autonomous(name = "BlueFlickClose 1 PIXEL")
-public class BlueFlickClose extends LinearOpMode {
+@Autonomous(name = "BlueDoubleClose 2 PIXELS")
+public class BlueDoubleClose extends LinearOpMode {
     MainRobot robot;
     int spike = 2;
     public Pose2d startPose = new Pose2d(24, 70, Math.toRadians(90));
@@ -38,7 +38,7 @@ public class BlueFlickClose extends LinearOpMode {
                 doSpike3();
                 break;
         }
-
+        //pixel1(); //FIXME uncomment when confirm pixel1 works
 
     }
     public void doSpike1(){
@@ -54,22 +54,27 @@ public class BlueFlickClose extends LinearOpMode {
                 .strafeRight(3)
                 .build();
         startPose = right_1.end();
-        Trajectory forward_2 = robot.trajectoryBuilder(startPose)
-                .forward(19)
+        Trajectory back_1 = robot.trajectoryBuilder(startPose)
+                .back(19)
                 .build();
-        startPose = forward_2.end();
+        startPose = back_1.end();
         Trajectory left_3 = robot.trajectoryBuilder(startPose)
-                .strafeLeft(38)
+                .strafeLeft(20)
                 .build();
         startPose = left_3.end();
+        Trajectory spline_1 = robot.trajectoryBuilder(startPose)
+                .splineTo(new Vector2d(startPose.getX(), startPose.getY()+10), Math.toRadians(0))
+                .build();
+        startPose = spline_1.end();
 
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
         robot.followTrajectory(right_1);
-        robot.followTrajectory(forward_2);
+        robot.followTrajectory(back_1);
         robot.followTrajectory(left_3);
+        robot.followTrajectory(spline_1);
         robot.pause(500);
     }
 
@@ -82,8 +87,12 @@ public class BlueFlickClose extends LinearOpMode {
                 .splineTo(new Vector2d(startPose.getX()+5, startPose.getY()+21), Math.toRadians(0))
                 .build();
         startPose = spline_1.end();
+        Trajectory right_1  = robot.trajectoryBuilder(startPose)
+                .strafeRight(6)
+                .build();
+        startPose = right_1.end();
         Trajectory backup  = robot.trajectoryBuilder(startPose)
-                .back(38)
+                .back(20)
                 .build();
         startPose = backup.end();
 
@@ -91,6 +100,7 @@ public class BlueFlickClose extends LinearOpMode {
         robot.followTrajectory(spline_1);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
+        robot.followTrajectory(right_1);
         robot.followTrajectory(backup);
         robot.pause(500);
     }
@@ -112,9 +122,13 @@ public class BlueFlickClose extends LinearOpMode {
                 .build();
         startPose = left_2.end();
         Trajectory right_1  = robot.trajectoryBuilder(startPose)
-                .strafeRight(40)
+                .strafeRight(10)
                 .build();
         startPose = right_1.end();
+        Trajectory spline_2  = robot.trajectoryBuilder(startPose)
+                .splineTo(new Vector2d(startPose.getX()-15, startPose.getY()+5), Math.toRadians(0))
+                .build();
+        startPose = spline_2.end();
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
         robot.followTrajectory(spline_1);
@@ -122,10 +136,39 @@ public class BlueFlickClose extends LinearOpMode {
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
         robot.followTrajectory(right_1);
+        robot.followTrajectory(spline_2);
         robot.pause(500);
     }
 
+    public void pixel1(){
+        Trajectory creepbackward = robot.trajectoryBuilder(startPose)
+                .back(10)
+                .build();
+        startPose = creepbackward.end();
+        Trajectory creepbackward2 = robot.trajectoryBuilder(startPose)
+                .back(3)
+                .build();
+        startPose = creepbackward2.end();
 
+        robot.followTrajectory(creepbackward);
+        robot.pause(200);
+        robot.servos.Flick.setPosition(0.5); //FIXME input position from teleop code (bring up)
+        robot.pause(200);
+        robot.slides.setSlidesPower(1.0);
+        robot.pause(1500);
+        robot.servos.Flick.setPosition(0); //FIXME input position from teleop code (scoring)
+        robot.pause(200);
+        robot.followTrajectory(creepbackward2);
+        robot.servos.openClaw();
+        robot.pause(200);
+        robot.servos.closeClaw();
+        robot.pause(200);
+        robot.servos.Flick.setPosition(0.5); //FIXME input position from teleop code (bring back up)
+        robot.slides.setSlidesPower(-1.0);
+        robot.pause(1000);
+        //FIXME based on testing (should end up in back scoreboard section)
+
+    }
 
 
     private ElapsedTime runtime = new ElapsedTime();

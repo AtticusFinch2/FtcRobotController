@@ -20,7 +20,7 @@ public class Vision {
     public TfodProcessor tfod;
 
     private VisionPortal visionPortal;
-    private static final String TFOD_MODEL_ASSET_BLUE = "BA_Model_2.tflite";
+    private static final String TFOD_MODEL_ASSET_BLUE = "blueboxdetectorcenterstage.tflite";
     private static final String TFOD_MODEL_ASSET_RED = "redboxdetectorcenterstage.tflite";
 
     /**           IF YOU ARE GOING TO CHANGE THE MODEL CHANGE THIS FILE NAME -BM
@@ -79,7 +79,7 @@ public class Vision {
      * everything below this is -BM
      * */
     private int leftBound = 400;
-    private int rightBound = 750;
+    private int rightBound = 700;
     public void open(){
         visionPortal.setProcessorEnabled(tfod, true);
     }
