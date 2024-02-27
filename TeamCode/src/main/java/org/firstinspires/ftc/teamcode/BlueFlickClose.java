@@ -23,7 +23,6 @@ public class BlueFlickClose extends LinearOpMode {
         doTheCvThing();
         robot.pause(1200);
         robot.setPoseEstimate(startPose);
-        //spike = 3;
         switch (spike){
             case 1:
                 robot.lighting.blinkMagenta();

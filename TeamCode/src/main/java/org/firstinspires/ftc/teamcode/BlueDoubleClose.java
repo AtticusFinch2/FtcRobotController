@@ -19,11 +19,10 @@ public class BlueDoubleClose extends LinearOpMode {
 
         robot = new MainRobot(hardwareMap, true);
         waitForStart();
-        //robot.servos.Rotator.setPosition(0.17);
+        robot.servos.Flick.setPosition(0.4);
         doTheCvThing();
         robot.pause(1200);
         robot.setPoseEstimate(startPose);
-        //spike = 3;
         switch (spike){
             case 1:
                 robot.lighting.blinkMagenta();
@@ -141,16 +140,16 @@ public class BlueDoubleClose extends LinearOpMode {
     }
 
     public void pixel1(){
-        Trajectory creepbackward = robot.trajectoryBuilder(startPose)
+        /*Trajectory creepbackward = robot.trajectoryBuilder(startPose)
                 .back(10)
                 .build();
-        startPose = creepbackward.end();
+        startPose = creepbackward.end();*/
         Trajectory creepbackward2 = robot.trajectoryBuilder(startPose)
                 .back(3)
                 .build();
         startPose = creepbackward2.end();
 
-        robot.followTrajectory(creepbackward);
+        //robot.followTrajectory(creepbackward);
         robot.pause(200);
         robot.servos.Flick.setPosition(0.5); //FIXME input position from teleop code (bring up)
         robot.pause(200);

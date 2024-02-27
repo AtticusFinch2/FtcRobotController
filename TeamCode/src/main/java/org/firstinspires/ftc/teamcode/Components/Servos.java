@@ -22,7 +22,8 @@ public class Servos {
         ClawR = hardwareMap.get(Servo.class, "clawr");
         Purps = hardwareMap.get(Servo.class, "purps");
         Airplane = hardwareMap.get(Servo.class, "airplane");
-        Flick.setPosition(0.81);
+        closeClaw();
+        Flick.setPosition(0.28);
         Sweep.setPower(0.0);
         Airplane.setPosition(0.5);
         Purps.setPosition(0.35);

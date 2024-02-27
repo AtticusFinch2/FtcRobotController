@@ -23,7 +23,6 @@ public class BlueFlickFar extends LinearOpMode {
         doTheCvThing();
         robot.pause(1200);
         robot.setPoseEstimate(startPose);
-        //spike = 3; // TODO: REMOVE WHEN DONE MAKING TRAJECTORIES FOR EACH SPIKE
         switch (spike){
             case 1:
                 robot.lighting.blinkMagenta();
