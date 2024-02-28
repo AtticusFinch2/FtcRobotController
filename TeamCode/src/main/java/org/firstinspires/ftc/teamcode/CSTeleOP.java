@@ -215,7 +215,7 @@ public class CSTeleOP extends LinearOpMode {
             }
             if (!open_finger) { //open
                 ClawL.setPosition(0.5);
-                ClawR.setPosition(0.7);
+                ClawR.setPosition(0.6);
             } else{ //closed
                 ClawL.setPosition(0.1);
                 ClawR.setPosition(1.0);
@@ -342,9 +342,9 @@ public class CSTeleOP extends LinearOpMode {
             FL.setPower(flCurrentPower);
             FR.setPower(frCurrentPower);
             BL.setPower(blCurrentPower);
-            BR.setPower(brCurrentPower * 0.80);
+            BR.setPower(brCurrentPower);
             LS.setPower(lsCurrentPower);
-            RS.setPower(rsCurrentPower * 0.6);
+            RS.setPower(rsCurrentPower);
 
 
 
