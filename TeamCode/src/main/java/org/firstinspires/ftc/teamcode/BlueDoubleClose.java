@@ -12,11 +12,10 @@ import org.firstinspires.ftc.teamcode.Components.MainRobot;
 @Autonomous(name = "BlueDoubleClose 2 PIXELS")
 public class BlueDoubleClose extends LinearOpMode {
     MainRobot robot;
-    int spike = 2;
+    int spike = 1;
     public Pose2d startPose = new Pose2d(16, 64, Math.toRadians(270));
     @Override
     public void runOpMode() {
-
         robot = new MainRobot(hardwareMap, true);
         waitForStart();
         robot.servos.Flick.setPosition(0.4);
@@ -53,35 +52,40 @@ public class BlueDoubleClose extends LinearOpMode {
                 .strafeRight(3)
                 .build();
         startPose = right_1.end();
-        Trajectory spline_1 = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(38, 44), Math.toRadians(0))
+        Trajectory back_1 = robot.trajectoryBuilder(startPose)
+                .back(16)
                 .build();
-        startPose = spline_1.end();
+        startPose = back_1.end();
+        Trajectory revert = robot.trajectoryBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(38, 40, Math.toRadians(180)))
+                .build();
+        startPose = revert.end();
 
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
         robot.followTrajectory(right_1);
-        robot.followTrajectory(spline_1);
+        robot.followTrajectory(back_1);
+        robot.followTrajectory(revert);
         robot.pause(500);
     }
 //temp change
     public void doSpike2(){
         Trajectory spline_1  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(14, 30), Math.toRadians(180))
+                .splineTo(new Vector2d(14, 38), Math.toRadians(180))
                 .build();
         startPose = spline_1.end();
         Trajectory left_1  = robot.trajectoryBuilder(startPose)
-                .strafeLeft(6)
+                .strafeLeft(2)
                 .build();
         startPose = left_1.end();
         Trajectory right_1  = robot.trajectoryBuilder(startPose)
-                .strafeRight(6)
+                .strafeRight(2)
                 .build();
         startPose = right_1.end();
         Trajectory backup  = robot.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(38, 40, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(38, 36, Math.toRadians(180)))
                 .build();
         startPose = backup.end();
 
@@ -94,8 +98,12 @@ public class BlueDoubleClose extends LinearOpMode {
         robot.pause(500);
     }
     public void doSpike3(){
+        Trajectory left_first = robot.trajectoryBuilder(startPose)
+                .strafeLeft(10)
+                .build();
+        startPose = left_first.end();
         Trajectory spline_1  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(10, 28), Math.toRadians(90))
+                .splineTo(new Vector2d(18, 34), Math.toRadians(90))
                 .build();
         startPose = spline_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
@@ -107,9 +115,10 @@ public class BlueDoubleClose extends LinearOpMode {
                 .build();
         startPose = right_1.end();
         Trajectory back_1  = robot.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(38, 40, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(38, 36, Math.toRadians(180)))
                 .build();
         startPose = back_1.end();
+        robot.followTrajectory(left_first);
         robot.followTrajectory(spline_1);
         robot.followTrajectory(left_1);
         robot.servos.Purps.setPosition(0);
