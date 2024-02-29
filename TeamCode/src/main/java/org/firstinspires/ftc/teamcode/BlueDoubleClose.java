@@ -98,33 +98,38 @@ public class BlueDoubleClose extends LinearOpMode {
         robot.pause(500);
     }
     public void doSpike3(){
-        Trajectory left_first = robot.trajectoryBuilder(startPose)
-                .strafeLeft(10)
+        Trajectory forward_1  = robot.trajectoryBuilder(startPose)
+                .forward(5)
                 .build();
-        startPose = left_first.end();
-        Trajectory spline_1  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(18, 34), Math.toRadians(90))
-                .build();
-        startPose = spline_1.end();
+        startPose = forward_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
                 .strafeLeft(4)
                 .build();
         startPose = left_1.end();
-        Trajectory right_1 = robot.trajectoryBuilder(startPose)
-                .strafeRight(4)
+        Trajectory spline_1  = robot.trajectoryBuilder(startPose)
+                .splineTo(new Vector2d(startPose.getX()+4, startPose.getY()+20), Math.toRadians(-90))
+                .build();
+        startPose = spline_1.end();
+        Trajectory left_2 = robot.trajectoryBuilder(startPose)
+                .strafeLeft(5)
+                .build();
+        startPose = left_2.end();
+        Trajectory right_1  = robot.trajectoryBuilder(startPose)
+                .strafeRight(10)
                 .build();
         startPose = right_1.end();
-        Trajectory back_1  = robot.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(38, 36, Math.toRadians(180)))
+        Trajectory spline_2  = robot.trajectoryBuilder(startPose)
+                .splineTo(new Vector2d(startPose.getX()-15, startPose.getY()+5), Math.toRadians(0))
                 .build();
-        startPose = back_1.end();
-        robot.followTrajectory(left_first);
-        robot.followTrajectory(spline_1);
+        startPose = spline_2.end();
+        robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
+        robot.followTrajectory(spline_1);
+        robot.followTrajectory(left_2);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
         robot.followTrajectory(right_1);
-        robot.followTrajectory(back_1);
+        robot.followTrajectory(spline_2);
         robot.pause(500);
     }
 

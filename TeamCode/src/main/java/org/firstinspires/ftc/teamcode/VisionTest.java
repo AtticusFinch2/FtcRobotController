@@ -51,7 +51,7 @@ public class VisionTest extends LinearOpMode {
             @Override
             public void onOpened()
             {
-                webcam.startStreaming(1920,1080, OpenCvCameraRotation.SENSOR_NATIVE);
+                webcam.startStreaming(1280,720, OpenCvCameraRotation.SENSOR_NATIVE);
             }
 
             @Override

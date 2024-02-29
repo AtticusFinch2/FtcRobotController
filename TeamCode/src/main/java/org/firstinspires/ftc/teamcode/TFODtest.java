@@ -19,7 +19,7 @@ public class TFODtest extends LinearOpMode {
 
         robot = new MainRobot(hardwareMap, true);
         waitForStart();
-        doTheCvThing();
+        //doTheCvThing();
         while (opModeIsActive()) {
             telemetryTfod();
             telemetry.update();
