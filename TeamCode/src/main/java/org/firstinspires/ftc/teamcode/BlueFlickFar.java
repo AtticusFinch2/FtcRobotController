@@ -19,7 +19,7 @@ public class BlueFlickFar extends LinearOpMode {
 
         robot = new MainRobot(hardwareMap, true);
         waitForStart();
-        //robot.servos.Rotator.setPosition(0.17);
+        robot.servos.Flick.setPosition(0.4);
         doTheCvThing();
         robot.pause(1200);
         robot.setPoseEstimate(startPose);
@@ -42,28 +42,32 @@ public class BlueFlickFar extends LinearOpMode {
     }
     public void doSpike1(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(29)
+                .forward(27)
                 .build();
         startPose = forward_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
-                .strafeLeft(5.5)
+                .strafeLeft(6)
                 .build();
         startPose = left_1.end();
         Trajectory right_1 = robot.trajectoryBuilder(startPose)
-                .strafeRight(5.5)
+                .strafeRight(6)
                 .build();
         startPose = right_1.end();
         Trajectory forward_2 = robot.trajectoryBuilder(startPose)
-                .forward(15)
+                .forward(20)
                 .build();
         startPose = forward_2.end();
-
+        Trajectory left_2 = robot.trajectoryBuilder(startPose)
+                .strafeLeft(60)
+                .build();
+        startPose = forward_2.end();
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
         robot.followTrajectory(right_1);
-        //robot.followTrajectory(forward_2);
+        robot.followTrajectory(forward_2);
+        robot.followTrajectory(left_2);
         robot.pause(500);
     }
     public void doSpike2(){
@@ -84,13 +88,17 @@ public class BlueFlickFar extends LinearOpMode {
                 .build();
         startPose = right_2.end();
         Trajectory forward  = robot.trajectoryBuilder(startPose)
-                .forward(15)
+                .forward(12)
                 .build();
         startPose = forward.end();
         Trajectory left_1  = robot.trajectoryBuilder(startPose)
-                .strafeLeft(15)
+                .strafeLeft(22)
                 .build();
         startPose = left_1.end();
+        Trajectory back_1 = robot.trajectoryBuilder(startPose)
+                .back(60)
+                .build();
+        startPose = back_1.end();
         robot.followTrajectory(right_1);
         robot.followTrajectory(forward_1);
         robot.followTrajectory(spline_1);
@@ -98,8 +106,9 @@ public class BlueFlickFar extends LinearOpMode {
         robot.pause(500);
         robot.followTrajectory(right_2);
         robot.pause(500);
-        //robot.followTrajectory(forward);
-        //robot.followTrajectory(left_1);
+        robot.followTrajectory(forward);
+        robot.followTrajectory(left_1);
+        robot.followTrajectory(back_1);
     }
     public void doSpike3(){
         Trajectory spline_1  = robot.trajectoryBuilder(startPose)
@@ -111,17 +120,17 @@ public class BlueFlickFar extends LinearOpMode {
                 .build();
         startPose = right_1.end();
         Trajectory right_2 = robot.trajectoryBuilder(startPose)
-                .strafeRight(2)
+                .strafeRight(3)
                 .build();
         startPose = right_2.end();
         Trajectory back_2 = robot.trajectoryBuilder(startPose)
-                .back(14)
+                .back(18)
                 .build();
         startPose = back_2.end();
-        Trajectory left_2 = robot.trajectoryBuilder(startPose)
-                .strafeLeft(43)
+        Trajectory right_3 = robot.trajectoryBuilder(startPose)
+                .strafeRight(60)
                 .build();
-        startPose = left_2.end();
+        startPose = right_3.end();
 
         robot.followTrajectory(spline_1);
         robot.followTrajectory(right_1);
@@ -129,7 +138,7 @@ public class BlueFlickFar extends LinearOpMode {
         robot.pause(500);
         robot.followTrajectory(right_2);
         robot.followTrajectory(back_2);
-        //robot.followTrajectory(left_2);
+        //robot.followTrajectory(right_3);
         robot.pause(500);
     }
 
