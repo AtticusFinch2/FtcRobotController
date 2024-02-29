@@ -226,7 +226,7 @@ public class CSTeleOP extends LinearOpMode {
             } else if (flick_position == 1) {
                 Flick.setPosition(0.28);
             } else if (flick_position == 2) {
-                Flick.setPosition(0.28+flickOffset);
+                Flick.setPosition(Range.clip(0.28+flickOffset, 0.28, 1.0));
             }
             //do smth to drive with x and y
             telemetry.addData("dir", "x2 (%.2f), y2 (%.2f)", x, y);
