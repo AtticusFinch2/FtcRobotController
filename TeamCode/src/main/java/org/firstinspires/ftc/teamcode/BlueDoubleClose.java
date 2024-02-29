@@ -66,7 +66,7 @@ public class BlueDoubleClose extends LinearOpMode {
         robot.followTrajectory(spline_1);
         robot.pause(500);
     }
-
+//temp change
     public void doSpike2(){
         Trajectory spline_1  = robot.trajectoryBuilder(startPose)
                 .splineTo(new Vector2d(14, 30), Math.toRadians(180))
