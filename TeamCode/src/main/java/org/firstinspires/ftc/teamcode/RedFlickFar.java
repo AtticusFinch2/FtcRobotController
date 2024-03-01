@@ -58,10 +58,10 @@ public class RedFlickFar extends LinearOpMode {
                 .forward(19)
                 .build();
         startPose = forward_2.end();
-        Trajectory left_3 = robot.trajectoryBuilder(startPose)
-                .strafeLeft(38)
+        Trajectory right_2 = robot.trajectoryBuilder(startPose)
+                .strafeRight(85)
                 .build();
-        startPose = left_3.end();
+        startPose = right_2.end();
 
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
@@ -69,7 +69,7 @@ public class RedFlickFar extends LinearOpMode {
         robot.pause(500);
         robot.followTrajectory(right_1);
         robot.followTrajectory(forward_2);
-        //robot.followTrajectory(left_3);
+        robot.followTrajectory(right_2);
         robot.pause(500);
     }
 
@@ -79,19 +79,34 @@ public class RedFlickFar extends LinearOpMode {
                 .build();
         startPose = forward_1.end();
         Trajectory spline_1  = robot.trajectoryBuilder(forward_1.end())
-                .splineTo(new Vector2d(startPose.getX()+5, startPose.getY()+21), Math.toRadians(0))
+                .splineTo(new Vector2d(startPose.getX(), startPose.getY()+19), Math.toRadians(0))
                 .build();
         startPose = spline_1.end();
         Trajectory right_2  = robot.trajectoryBuilder(startPose)
-                .strafeRight(10)
+                .strafeRight(5)
                 .build();
         startPose = right_2.end();
+        Trajectory back_1  = robot.trajectoryBuilder(startPose)
+                .back(10)
+                .build();
+        startPose = back_1.end();
+        Trajectory left_1  = robot.trajectoryBuilder(startPose)
+                .strafeLeft(30)
+                .build();
+        startPose = left_1.end();
+        Trajectory forward_2  = robot.trajectoryBuilder(startPose)
+                .forward(100)
+                .build();
+        startPose = forward_2.end();
 
         robot.followTrajectory(forward_1);
         robot.followTrajectory(spline_1);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
         robot.followTrajectory(right_2);
+        robot.followTrajectory(back_1);
+        robot.followTrajectory(left_1);
+        robot.followTrajectory(forward_2);
         robot.pause(500);
     }
     public void doSpike3(){
@@ -104,7 +119,7 @@ public class RedFlickFar extends LinearOpMode {
                 .build();
         startPose = left_1.end();
         Trajectory spline_1  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(startPose.getX()+4, startPose.getY()+20), Math.toRadians(-90))
+                .splineTo(new Vector2d(startPose.getX()+4, startPose.getY()+18), Math.toRadians(-90))
                 .build();
         startPose = spline_1.end();
         Trajectory left_2 = robot.trajectoryBuilder(startPose)
@@ -115,6 +130,14 @@ public class RedFlickFar extends LinearOpMode {
                 .strafeRight(5)
                 .build();
         startPose = right_1.end();
+        Trajectory back_1  = robot.trajectoryBuilder(startPose)
+                .back(25)
+                .build();
+        startPose = back_1.end();
+        Trajectory left_final  = robot.trajectoryBuilder(startPose)
+                .strafeLeft(85)
+                .build();
+        startPose = left_final.end();
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
         robot.followTrajectory(spline_1);
@@ -122,24 +145,12 @@ public class RedFlickFar extends LinearOpMode {
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
         robot.followTrajectory(right_1);
+        robot.followTrajectory(back_1);
+        robot.followTrajectory(left_final);
         robot.pause(500);
     }
 
-    /*public void parkr(){
-        Trajectory rightpark = robot.trajectoryBuilder(startPose)
-                .strafeRight(32)
-                .build();
-        startPose = rightpark.end();
 
-        Trajectory creepbackward2 = robot.trajectoryBuilder(startPose)
-                .back(6)
-                .build();
-        startPose = creepbackward2.end();
-
-        robot.followTrajectory(rightpark);
-        robot.pause(300);
-        robot.followTrajectory(creepbackward2);
-    }*/
     private ElapsedTime runtime = new ElapsedTime();
     public void doTheCvThing(){
         robot.vision.open();
