@@ -42,11 +42,12 @@ public class MeepMeepTesting {
                 .setConstraints(30, 30, Math.toRadians(166), Math.toRadians(60), 13)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(startPosebdc)
-                                .strafeLeft(7)
-                                .splineTo(new Vector2d(16, 28), Math.toRadians(180))
-                                .strafeLeft(4)
-                                .strafeRight(4)
-                                .lineToLinearHeading(new Pose2d(38, 40, Math.toRadians(180)))
+                                .forward(5)
+                                .strafeLeft(14)
+                                .splineTo(new Vector2d(15, 38), Math.toRadians(180))
+                                .strafeLeft(5)
+                                .strafeRight(10)
+                                .lineToLinearHeading(new Pose2d(38, 36, Math.toRadians(180)))
                                 .build()
                 );
 
