@@ -10,6 +10,7 @@ public class MeepMeepTesting {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
         Pose2d startPosebdc = new Pose2d(16, 64, Math.toRadians(270));
+        Pose2d startPoserdc = new Pose2d(16, -64, Math.toRadians(90));
         //IMPORTANT: COMMENT OUT BOT ENTITIES DEPENDING ON WHICH PATHING WE WANT TO TEST
 
         RoadRunnerBotEntity BlueDoubleCloseSpike1 = new DefaultBotBuilder(meepMeep)
@@ -51,12 +52,36 @@ public class MeepMeepTesting {
                                 .build()
                 );
 
+        RoadRunnerBotEntity RedDoubleCloseSpike1 = new DefaultBotBuilder(meepMeep)
+                // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
+                .setConstraints(30, 30, Math.toRadians(166), Math.toRadians(60), 13)
+                .followTrajectorySequence(drive ->
+                        drive.trajectorySequenceBuilder(startPoserdc)
+                                .forward(30)
+                                .strafeLeft(6)
+                                .strafeRight(6)
+                                .lineToLinearHeading(new Pose2d (38, -45, Math.toRadians(180)))
+                                .build()
+                );
+
+        RoadRunnerBotEntity RedDoubleCloseSpike2 = new DefaultBotBuilder(meepMeep)
+                // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
+                .setConstraints(30, 30, Math.toRadians(166), Math.toRadians(60), 13)
+                .followTrajectorySequence(drive ->
+                        drive.trajectorySequenceBuilder(startPoserdc)
+                                .forward(3)
+                                .strafeRight(8)
+                                .splineTo(new Vector2d(16, -38), Math.toRadians(0))
+                                .lineToLinearHeading(new Pose2d (38, -40, Math.toRadians(180)))
+                                .build()
+                );
+
 
         // MEEP MEEP SIMULATOR RUNNER
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
-                .addEntity(BlueDoubleCloseSpike3)
+                .addEntity(RedDoubleCloseSpike2)
                 .start();
     }
 }
