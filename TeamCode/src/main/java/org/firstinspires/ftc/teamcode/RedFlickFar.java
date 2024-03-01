@@ -59,7 +59,7 @@ public class RedFlickFar extends LinearOpMode {
                 .build();
         startPose = forward_2.end();
         Trajectory right_2 = robot.trajectoryBuilder(startPose)
-                .strafeRight(85)
+                .strafeRight(90)
                 .build();
         startPose = right_2.end();
 
@@ -131,11 +131,11 @@ public class RedFlickFar extends LinearOpMode {
                 .build();
         startPose = right_1.end();
         Trajectory back_1  = robot.trajectoryBuilder(startPose)
-                .back(25)
+                .back(23)
                 .build();
         startPose = back_1.end();
         Trajectory left_final  = robot.trajectoryBuilder(startPose)
-                .strafeLeft(85)
+                .strafeLeft(90)
                 .build();
         startPose = left_final.end();
         robot.followTrajectory(forward_1);

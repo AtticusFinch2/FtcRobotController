@@ -317,7 +317,7 @@ public class CSTeleOP extends LinearOpMode {
             }
 
             if (gamepad1.y){
-                Airplane.setPosition(0.0);
+                Airplane.setPosition(1.0);
             }
 
 
