@@ -24,7 +24,7 @@ public class Slides {
 
     public void setSlidesPower (double power) {
         LS.setPower(power);
-        RS.setPower(power*0.6);
+        RS.setPower(power);
     }
 
 }

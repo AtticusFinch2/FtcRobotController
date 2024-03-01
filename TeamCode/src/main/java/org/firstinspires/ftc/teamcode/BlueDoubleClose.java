@@ -26,14 +26,17 @@ public class BlueDoubleClose extends LinearOpMode {
             case 1:
                 robot.lighting.blinkMagenta();
                 doSpike1();
-                break; //FIXME REMOVE BREAKS AFTER PIXEL1 GETS COMPLETE
+                pixel1();
+                break;
             case 2:
                 robot.lighting.blinkCyan();
                 doSpike2();
+                pixel1();
                 break;
             case 3:
                 robot.lighting.blinkGreen();
                 doSpike3();
+                pixel1();
                 break;
         }
         //pixel1(); //FIXME uncomment when confirm pixel1 works
@@ -103,11 +106,11 @@ public class BlueDoubleClose extends LinearOpMode {
                 .build();
         startPose = forward_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
-                .strafeLeft(4)
+                .strafeLeft(14)
                 .build();
         startPose = left_1.end();
         Trajectory spline_1  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(startPose.getX()+4, startPose.getY()+20), Math.toRadians(-90))
+                .splineTo(new Vector2d(22, 38), Math.toRadians(90))
                 .build();
         startPose = spline_1.end();
         Trajectory left_2 = robot.trajectoryBuilder(startPose)
@@ -118,10 +121,10 @@ public class BlueDoubleClose extends LinearOpMode {
                 .strafeRight(10)
                 .build();
         startPose = right_1.end();
-        Trajectory spline_2  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(startPose.getX()-15, startPose.getY()+5), Math.toRadians(0))
+        Trajectory backup  = robot.trajectoryBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(38, 36, Math.toRadians(180)))
                 .build();
-        startPose = spline_2.end();
+        startPose = backup.end();
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
         robot.followTrajectory(spline_1);
@@ -129,7 +132,7 @@ public class BlueDoubleClose extends LinearOpMode {
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
         robot.followTrajectory(right_1);
-        robot.followTrajectory(spline_2);
+        robot.followTrajectory(backup);
         robot.pause(500);
     }
 
@@ -139,26 +142,34 @@ public class BlueDoubleClose extends LinearOpMode {
                 .build();
         startPose = creepbackward.end();*/
         Trajectory creepbackward2 = robot.trajectoryBuilder(startPose)
-                .back(3)
+                .back(5)
                 .build();
         startPose = creepbackward2.end();
+        Trajectory left_park = robot.trajectoryBuilder(startPose)
+                .strafeLeft(14)
+                .build();
+        startPose = left_park.end();
 
         //robot.followTrajectory(creepbackward);
         robot.pause(200);
         robot.servos.Flick.setPosition(0.5); //FIXME input position from teleop code (bring up)
         robot.pause(200);
-        robot.slides.setSlidesPower(1.0);
-        robot.pause(1500);
+        robot.slides.setSlidesPower(0.8);
+        robot.pause(1200);
+        robot.slides.setSlidesPower(0);
         robot.servos.Flick.setPosition(0); //FIXME input position from teleop code (scoring)
         robot.pause(200);
         robot.followTrajectory(creepbackward2);
         robot.servos.openClaw();
-        robot.pause(200);
+        robot.pause(500);
         robot.servos.closeClaw();
         robot.pause(200);
         robot.servos.Flick.setPosition(0.5); //FIXME input position from teleop code (bring back up)
-        robot.slides.setSlidesPower(-1.0);
         robot.pause(1000);
+        robot.slides.setSlidesPower(-0.8);
+        robot.pause(1000);
+        robot.slides.setSlidesPower(0);
+        robot.followTrajectory(left_park);
         //FIXME based on testing (should end up in back scoreboard section)
 
     }
