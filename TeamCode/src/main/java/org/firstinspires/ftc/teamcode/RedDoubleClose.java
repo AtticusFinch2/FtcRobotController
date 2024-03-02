@@ -13,10 +13,10 @@ import org.firstinspires.ftc.teamcode.Components.MainRobot;
 public class RedDoubleClose extends LinearOpMode {
     MainRobot robot;
     int spike = 1;
-    public Pose2d startPose = new Pose2d(16, 64, Math.toRadians(270));
+    public Pose2d startPose = new Pose2d(16, -64, Math.toRadians(90));
     @Override
     public void runOpMode() {
-        robot = new MainRobot(hardwareMap, true);
+        robot = new MainRobot(hardwareMap, false);
         waitForStart();
         robot.servos.Flick.setPosition(0.35);
         doTheCvThing();
@@ -44,25 +44,25 @@ public class RedDoubleClose extends LinearOpMode {
     }
     public void doSpike1(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(30)
+                .forward(26)
                 .build();
         startPose = forward_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
-                .strafeLeft(3)
+                .strafeLeft(6)
                 .build();
         startPose = left_1.end();
         Trajectory right_1 = robot.trajectoryBuilder(startPose)
-                .strafeRight(3)
+                .strafeRight(6)
                 .build();
         startPose = right_1.end();
         Trajectory back_1 = robot.trajectoryBuilder(startPose)
                 .back(16)
                 .build();
         startPose = back_1.end();
-        Trajectory revert = robot.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(38, 45, Math.toRadians(180)))
+        Trajectory toBoard = robot.trajectoryBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(38, -36, Math.toRadians(180)))
                 .build();
-        startPose = revert.end();
+        startPose = toBoard.end();
 
         robot.followTrajectory(forward_1);
         robot.followTrajectory(left_1);
@@ -70,33 +70,32 @@ public class RedDoubleClose extends LinearOpMode {
         robot.pause(500);
         robot.followTrajectory(right_1);
         robot.followTrajectory(back_1);
-        robot.followTrajectory(revert);
+        robot.followTrajectory(toBoard);
         robot.pause(500);
     }
-    //temp change
+
     public void doSpike2(){
-        Trajectory spline_1  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(14, 38), Math.toRadians(180))
+        Trajectory forward_1  = robot.trajectoryBuilder(startPose)
+                .forward(3)
                 .build();
-        startPose = spline_1.end();
-        Trajectory left_1  = robot.trajectoryBuilder(startPose)
-                .strafeLeft(2)
-                .build();
-        startPose = left_1.end();
-        Trajectory right_1  = robot.trajectoryBuilder(startPose)
-                .strafeRight(5)
+        startPose = forward_1.end();
+        Trajectory right_1 = robot.trajectoryBuilder(startPose)
+                .strafeRight(8)
                 .build();
         startPose = right_1.end();
+        Trajectory spline_1  = robot.trajectoryBuilder(startPose)
+                .splineTo(new Vector2d(20, 40), Math.toRadians(90))
+                .build();
+        startPose = spline_1.end();
         Trajectory backup  = robot.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(38, 40, Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(38, -40, Math.toRadians(180)))
                 .build();
         startPose = backup.end();
-
+        robot.followTrajectory(forward_1);
+        robot.followTrajectory(right_1);
         robot.followTrajectory(spline_1);
-        robot.followTrajectory(left_1);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
-        robot.followTrajectory(right_1);
         robot.followTrajectory(backup);
         robot.pause(500);
     }
@@ -105,36 +104,37 @@ public class RedDoubleClose extends LinearOpMode {
                 .forward(5)
                 .build();
         startPose = forward_1.end();
-        Trajectory left_1 = robot.trajectoryBuilder(startPose)
-                .strafeLeft(14)
-                .build();
-        startPose = left_1.end();
-        Trajectory spline_1  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(20, 40), Math.toRadians(90))
-                .build();
-        startPose = spline_1.end();
-        Trajectory left_2 = robot.trajectoryBuilder(startPose)
-                .strafeLeft(10)
-                .build();
-        startPose = left_2.end();
         Trajectory right_1  = robot.trajectoryBuilder(startPose)
-                .strafeRight(10)
+                .strafeRight(5)
                 .build();
         startPose = right_1.end();
-        Trajectory backup  = robot.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(38, 33, Math.toRadians(180)))
+        Trajectory line_1  = robot.trajectoryBuilder(startPose)
+                .splineTo(new Vector2d(21, -26), Math.toRadians(180))
                 .build();
-        startPose = backup.end();
+        startPose = line_1.end();
+        Trajectory right_2  = robot.trajectoryBuilder(startPose)
+                .strafeRight(5)
+                .build();
+        startPose = right_2.end();
+        Trajectory path_2  = robot.trajectoryBuilder(startPose)
+                .lineToLinearHeading(new Pose2d (38, -46, Math.toRadians(180)))
+                .build();
+        startPose = path_2.end();
+        /*Trajectory backup  = robot.trajectoryBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(38, -40, Math.toRadians(180)))
+                .build();
+        startPose = backup.end();*/
+
         robot.followTrajectory(forward_1);
-        robot.followTrajectory(left_1);
-        robot.followTrajectory(spline_1);
-        robot.followTrajectory(left_2);
+        robot.followTrajectory(right_1);
+        robot.followTrajectory(line_1);
         robot.servos.Purps.setPosition(0);
         robot.pause(500);
-        robot.followTrajectory(right_1);
-        robot.followTrajectory(backup);
+        robot.followTrajectory(right_2);
+        robot.followTrajectory(path_2);
         robot.pause(500);
     }
+
 
     public void pixel1(int param_spike){
         /*Trajectory creepbackward = robot.trajectoryBuilder(startPose)
@@ -142,7 +142,7 @@ public class RedDoubleClose extends LinearOpMode {
                 .build();
         startPose = creepbackward.end();*/
         Trajectory creepbackward2 = robot.trajectoryBuilder(startPose)
-                .back(5)
+                .back(7)
                 .build();
         startPose = creepbackward2.end();
         Trajectory jigle1 = robot.trajectoryBuilder(startPose)
@@ -153,10 +153,10 @@ public class RedDoubleClose extends LinearOpMode {
                 .back(2)
                 .build();
         startPose = jigle2.end();
-        Trajectory left_park = robot.trajectoryBuilder(startPose)
-                .strafeLeft(24 + ((2 - param_spike) * 6)) // 24 for middle, +- 6 for 1 and 3 respectively
+        Trajectory right_park = robot.trajectoryBuilder(startPose)
+                .strafeRight(24 + ((param_spike - 2) * 6)) // 24 for middle, +- 6 for 3 and 1 respectively
                 .build();
-        startPose = left_park.end();
+        startPose = right_park.end();
         Trajectory back_1 = robot.trajectoryBuilder(startPose)
                 .back(14)
                 .build();
@@ -184,7 +184,7 @@ public class RedDoubleClose extends LinearOpMode {
         robot.slides.setSlidesPower(-0.8);
         robot.pause(1100);
         robot.slides.setSlidesPower(0);
-        robot.followTrajectory(left_park);
+        robot.followTrajectory(right_park);
         robot.followTrajectory(back_1);
 
     }

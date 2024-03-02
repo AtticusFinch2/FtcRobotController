@@ -71,7 +71,20 @@ public class MeepMeepTesting {
                         drive.trajectorySequenceBuilder(startPoserdc)
                                 .forward(3)
                                 .strafeRight(8)
-                                .splineTo(new Vector2d(16, -38), Math.toRadians(0))
+                                .splineTo(new Vector2d(16, -30), Math.toRadians(180))
+                                .lineToLinearHeading(new Pose2d (38, -40, Math.toRadians(180)))
+                                .build()
+                );
+
+        RoadRunnerBotEntity RedDoubleCloseSpike3 = new DefaultBotBuilder(meepMeep)
+                // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
+                .setConstraints(30, 30, Math.toRadians(166), Math.toRadians(60), 13)
+                .followTrajectorySequence(drive ->
+                        drive.trajectorySequenceBuilder(startPoserdc)
+                                .forward(5)
+                                .strafeRight(5)
+                                .lineToLinearHeading(new Pose2d (21, -26, Math.toRadians(180)))
+                                .strafeRight(5)
                                 .lineToLinearHeading(new Pose2d (38, -40, Math.toRadians(180)))
                                 .build()
                 );
@@ -81,7 +94,7 @@ public class MeepMeepTesting {
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
-                .addEntity(RedDoubleCloseSpike2)
+                .addEntity(RedDoubleCloseSpike3)
                 .start();
     }
 }
