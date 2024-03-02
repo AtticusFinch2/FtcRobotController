@@ -43,7 +43,7 @@ public class RedFlickFar extends LinearOpMode {
     }
     public void doSpike1(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(28)
+                .forward(29)
                 .build();
         startPose = forward_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
@@ -75,7 +75,7 @@ public class RedFlickFar extends LinearOpMode {
 
     public void doSpike2(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(7)
+                .forward(8)
                 .build();
         startPose = forward_1.end();
         Trajectory spline_1  = robot.trajectoryBuilder(forward_1.end())
@@ -111,7 +111,7 @@ public class RedFlickFar extends LinearOpMode {
     }
     public void doSpike3(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(5)
+                .forward(6)
                 .build();
         startPose = forward_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
