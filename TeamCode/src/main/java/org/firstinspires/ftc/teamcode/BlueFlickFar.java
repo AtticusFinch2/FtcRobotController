@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Components.MainRobot;
 public class BlueFlickFar extends LinearOpMode {
     MainRobot robot;
     int spike = 2;
-    public Pose2d startPose = new Pose2d(24, 70, Math.toRadians(270));
+    public Pose2d startPose = new Pose2d(24, 71, Math.toRadians(270));
     @Override
     public void runOpMode() {
 
@@ -42,7 +42,7 @@ public class BlueFlickFar extends LinearOpMode {
     }
     public void doSpike1(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(27)
+                .forward(28)
                 .build();
         startPose = forward_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
@@ -76,7 +76,7 @@ public class BlueFlickFar extends LinearOpMode {
                 .build();
         startPose = right_1.end();
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(5)
+                .forward(6)
                 .build();
         startPose = forward_1.end();
         Trajectory spline_1  = robot.trajectoryBuilder(forward_1.end())
@@ -118,7 +118,7 @@ public class BlueFlickFar extends LinearOpMode {
     }
     public void doSpike3(){
         Trajectory spline_1  = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(startPose.getX()-5, startPose.getY()-28), startPose.getHeading()-Math.toRadians(180))
+                .splineTo(new Vector2d(startPose.getX()-5, startPose.getY()-29), startPose.getHeading()-Math.toRadians(180))
                 .build();
         startPose = spline_1.end();
         Trajectory right_1 = robot.trajectoryBuilder(startPose)
