@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Components.MainRobot;
 public class BlueDoubleClose extends LinearOpMode {
     MainRobot robot;
     int spike = 1;
-    public Pose2d startPose = new Pose2d(16, 64, Math.toRadians(270));
+    public Pose2d startPose = new Pose2d(16, 65, Math.toRadians(270));
     @Override
     public void runOpMode() {
         robot = new MainRobot(hardwareMap, true);
@@ -44,7 +44,7 @@ public class BlueDoubleClose extends LinearOpMode {
     }
     public void doSpike1(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(30)
+                .forward(31)
                 .build();
         startPose = forward_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
@@ -102,7 +102,7 @@ public class BlueDoubleClose extends LinearOpMode {
     }
     public void doSpike3(){
         Trajectory forward_1  = robot.trajectoryBuilder(startPose)
-                .forward(5)
+                .forward(6)
                 .build();
         startPose = forward_1.end();
         Trajectory left_1 = robot.trajectoryBuilder(startPose)
