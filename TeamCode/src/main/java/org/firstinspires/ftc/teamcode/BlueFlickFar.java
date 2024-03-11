@@ -92,7 +92,7 @@ public class BlueFlickFar extends LinearOpMode {
                 .build();
         startPose = forward.end();
         Trajectory left_1  = robot.trajectoryBuilder(startPose)
-                .strafeLeft(27)
+                .strafeLeft(30)
                 .build();
         startPose = left_1.end();
         Trajectory back_1 = robot.trajectoryBuilder(startPose)
